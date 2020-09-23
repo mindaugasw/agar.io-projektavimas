@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using agar_client.Game;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,11 +10,17 @@ namespace agar_client
 {
 	class CommunicationManager
 	{
+        public const string SERVER_URL = "https://localhost:44372";
+
 		public static CommunicationManager Instance;
 
-		HubConnection connection;
+        public event BasicDelegate ConnectedSuccessfully;
+        public event BasicDelegate ConnectionLost;
 
-		public CommunicationManager()
+        HubConnection connection;
+
+
+        public CommunicationManager()
 		{
 			if (Instance == null)
 				Instance = this;
@@ -21,17 +28,23 @@ namespace agar_client
 				throw new Exception();
 
 			connection = new HubConnectionBuilder()
-				.WithUrl("https://localhost:44372/gamehub")
+				.WithUrl(SERVER_URL+"/gamehub")
 				.Build();
 
 			connection.Closed += async (error) =>
 			{
-                Debug.WriteLine("CONNECTION CLOSED");
-				await Task.Delay(new Random().Next(0, 5) * 1000);
+                if (ConnectionLost != null)
+                    ConnectionLost.Invoke();
+                Logger.Log("CONNECTION LOST");
+                await Task.Delay(new Random().Next(0, 5) * 1000);
 				await connection.StartAsync();
             };
+            connection.Reconnected += async (connectionId) =>
+            {
+                Logger.Log("RECONNECTED");
+            };
 
-            connect();
+            //connect(); // TODO
 		}
 
         private async void connect(/*object sender, RoutedEventArgs e*/)
@@ -41,10 +54,12 @@ namespace agar_client
                 GameManager.MainWindow.Dispatcher.Invoke(() =>
                 {
                     //var newMessage = $"Received: user: {user}, msg: {message}";
-                    var newMessage = message;
+                    //var newMessage = message;
                     //messagesList.Items.Add(newMessage);
                     //Debug.WriteLine(newMessage);
-                });
+
+                    Logger.Log("Received message: " + message);
+				});
             });
 
 			try
@@ -53,7 +68,12 @@ namespace agar_client
                 //messagesList.Items.Add("Connection started");
                 //connectButton.IsEnabled = false;
                 //sendButton.IsEnabled = true;
-                Debug.WriteLine("SUCCESSFULLY CONNECTED");
+
+                //Debug.WriteLine("SUCCESSFULLY CONNECTED");
+                //MainWindow.Log()
+                Logger.Log("CONNECTION ESTABLISHED to " + SERVER_URL);
+                if (ConnectedSuccessfully != null)
+					ConnectedSuccessfully.Invoke();
 			}
 			catch (Exception ex)
 			{

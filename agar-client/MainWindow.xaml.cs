@@ -1,4 +1,5 @@
-﻿using System;
+﻿using agar_client.Game;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+public delegate void BasicDelegate();
+public delegate void StringDelegate(string str);
+
 namespace agar_client
 {
 	/// <summary>
@@ -21,17 +25,55 @@ namespace agar_client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public static MainWindow Instance;
+
+		public event StringDelegate ArrowKeysInput;
+
 		public MainWindow()
 		{
-			InitializeComponent();
+			if (Instance == null)
+				Instance = this;
+			else
+				throw new Exception();
 
-			new GameManager(this);
+			InitializeComponent();
+			new Logger(logTextBox);
+
+			Logger.Log("Initialized main window.");
+
+			//new GameManager(this);
 		}
 
 		void ProcessMovementInput(object sender, ExecutedRoutedEventArgs args)
 		{
-			string direction = args.Parameter.ToString();
-			InputHandler.Instance.Player_move(direction);
+			//string direction = args.Parameter.ToString();
+			//InputHandler.Instance.Player_move(direction);
+
+			if (ArrowKeysInput != null)
+				ArrowKeysInput.Invoke(args.Parameter.ToString());
+		}
+
+		private void connectButton_Click(object sender, RoutedEventArgs e)
+		{
+			new GameManager(this);
+			CommunicationManager.Instance.ConnectedSuccessfully += OnConnectionEstablished;
+			CommunicationManager.Instance.ConnectionLost += OnConnectionLost;
+
+			connectButton.Content = "Starting...";
+			connectButton.IsEnabled = false;
+		}
+
+		private void OnConnectionEstablished()
+		{
+			connectButton.Content = "Game in progress";
+			connectButton.IsEnabled = false;
+			
+		}
+
+		private void OnConnectionLost()
+		{
+			//connectButton.Content = "Game in progress";
+			//connectButton.IsEnabled = false;
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using agar_client.Game;
+using agar_client.Game.Objects;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -10,6 +12,10 @@ namespace agar_client
 		public static GameManager Instance;
 		public static MainWindow MainWindow;
 
+		public static Random Random;
+
+		LocalPlayer LocalPlayer;
+
 		public GameManager(MainWindow mainWindow)
 		{
 			if (Instance == null)
@@ -19,12 +25,16 @@ namespace agar_client
 
 			MainWindow = mainWindow;
 
+			Random = new Random();
+
+			new CommunicationManager();
 			new InputHandler();
 			new GraphicsDrawer();
-			new CommunicationManager();
 
-			Debug.WriteLine("Starting");
+			Logger.Log("All services initialized");
+
+			LocalPlayer = new LocalPlayer();
+
 		}
-
 	}
 }
