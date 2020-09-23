@@ -17,8 +17,9 @@ namespace agar_client.Game
 
 		public static void Log(object obj)
 		{
-			textBox.AppendText($"{DateTime.Now.ToString("HH:mm:ss")}: {obj.ToString()}\n");
+			textBox.AppendText($"\n{DateTime.Now.ToString("HH:mm:ss")}: {obj.ToString()}");
 			Debug.WriteLine(obj);
+			textBox.ScrollToEnd();
 		}
 		public static void Log()
 		{

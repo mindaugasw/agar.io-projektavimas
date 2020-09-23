@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-//using System.Drawing;
-using System.Windows;
 using System.Text;
 using agar_client.Game.Objects;
+using static agar_client.Game.Utils;
 
 namespace agar_client
 {
@@ -32,7 +31,7 @@ namespace agar_client
 		{
 			if (LocalPlayer.Instance != null)
 			{
-
+				var lp = LocalPlayer.Instance;
 				Point translation;
 
 				switch (direction)
@@ -53,8 +52,11 @@ namespace agar_client
 						throw new Exception();
 				}
 
-				translation = translation.Multiply(LocalPlayer.PLAYER_MOVE_SPEED);
-				GraphicsDrawer.TranslateShape(LocalPlayer.Instance.Shape, translation);
+				translation = translation * LocalPlayer.PLAYER_MOVE_SPEED;
+				lp.Position += translation;
+				//GraphicsDrawer.TranslateShape(LocalPlayer.Instance.Shape, translation); // Translation not working
+				GraphicsDrawer.MoveShape(lp.Shape, lp.Position);
+				CommunicationManager.Instance.MoveObject(lp.Id, lp.Position);
 				//CommunicationManager.Instance.sendMessage($"Player move: {direction}");
 			}
 		}

@@ -37,8 +37,8 @@ namespace agar_client
 				throw new Exception();
 
 			InitializeComponent();
-			new Logger(logTextBox);
 
+			new Logger(logTextBox);
 			Logger.Log("Initialized main window.");
 
 			//new GameManager(this);
@@ -67,13 +67,12 @@ namespace agar_client
 		{
 			connectButton.Content = "Game in progress";
 			connectButton.IsEnabled = false;
-			
 		}
 
 		private void OnConnectionLost()
 		{
-			//connectButton.Content = "Game in progress";
-			//connectButton.IsEnabled = false;
+			//connectButton.Content = "";
+			//connectButton.IsEnabled = true;
 		}
 	}
 }

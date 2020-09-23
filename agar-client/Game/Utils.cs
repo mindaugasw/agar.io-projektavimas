@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace agar_client.Game
 {
-	class Utils
+	static class Utils
 	{
 		public static string RandomString(int length)
 		{
@@ -15,12 +16,14 @@ namespace agar_client.Game
 		}
 
 		/// <summary>
-		/// Base Point class that allows easy conversion between System.Windows.Point and System.Drawing.Point
+		/// 2D Point structure that allows easy conversion between System.Windows.Point and System.Drawing.Point
 		/// </summary>
 		public struct Point
 		{
-			public int X;
-			public int Y;
+			[JsonPropertyName("x")]
+			public int X { get; set; }
+			[JsonPropertyName("y")]
+			public int Y { get; set; }
 
 			public Point(int x = 0, int y = 0)
 			{
@@ -87,6 +90,12 @@ namespace agar_client.Game
 			{
 				return new Point(a.X / b, a.Y / b);
 			}
+
+			public override string ToString()
+			{
+				return X + ", " + Y;
+			}
+
 		}
 
 	}

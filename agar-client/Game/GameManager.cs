@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using static agar_client.Game.Utils;
 
 namespace agar_client
 {
@@ -15,6 +16,8 @@ namespace agar_client
 		public static Random Random;
 
 		LocalPlayer LocalPlayer;
+		Dictionary<string, Player> players = new Dictionary<string, Player>();
+
 
 		public GameManager(MainWindow mainWindow)
 		{
@@ -35,6 +38,17 @@ namespace agar_client
 
 			LocalPlayer = new LocalPlayer();
 
+		}
+
+		public void CreatePlayer(string id, Point position)
+		{
+			var player = new Player(id, position);
+			players.Add(id, player);
+		}
+
+		public void MovePlayer(string id, Point position)
+		{
+			GraphicsDrawer.MoveShape(players[id].Shape, position);
 		}
 	}
 }

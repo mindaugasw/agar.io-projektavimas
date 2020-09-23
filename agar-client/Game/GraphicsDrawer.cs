@@ -84,10 +84,11 @@ namespace agar_client
 			Canvas.SetLeft(shape, position.X);
 			Canvas.SetTop(shape, position.Y);
 		}
-		/// <summary>
+
+		/// summary>
 		/// Move shape relatively to its current position
 		/// </summary>
-		public static void TranslateShape(Shape shape, Utils.Point translation)
+		/*public static void TranslateShape(Shape shape, Utils.Point translation)
 		{
 			MoveShape(shape, GetShapePosition(shape) + translation);
 			//throw new NotImplementedException();
@@ -95,7 +96,7 @@ namespace agar_client
 		public static Utils.Point GetShapePosition(Shape shape)
 		{
 			Utils.Point relativeTo = new Utils.Point();
-			return shape.PointToScreen(relativeTo);
-		}
+			return shape.PointToScreen(relativeTo); // TODO. Not working / working weirdly
+		}*/
 	}
 }
