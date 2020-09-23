@@ -54,10 +54,8 @@ namespace agar_client
 
 				translation = translation * LocalPlayer.PLAYER_MOVE_SPEED;
 				lp.Position += translation;
-				//GraphicsDrawer.TranslateShape(LocalPlayer.Instance.Shape, translation); // Translation not working
 				GraphicsDrawer.MoveShape(lp.Shape, lp.Position);
 				CommunicationManager.Instance.MoveObject(lp.Id, lp.Position);
-				//CommunicationManager.Instance.sendMessage($"Player move: {direction}");
 			}
 		}
 

@@ -40,15 +40,10 @@ namespace agar_client
 
 			new Logger(logTextBox);
 			Logger.Log("Initialized main window.");
-
-			//new GameManager(this);
 		}
 
 		void ProcessMovementInput(object sender, ExecutedRoutedEventArgs args)
 		{
-			//string direction = args.Parameter.ToString();
-			//InputHandler.Instance.Player_move(direction);
-
 			if (ArrowKeysInput != null)
 				ArrowKeysInput.Invoke(args.Parameter.ToString());
 		}

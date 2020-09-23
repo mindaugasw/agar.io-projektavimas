@@ -18,7 +18,6 @@ namespace agar_client.Game.Objects
 			else
 				throw new Exception();
 
-
 			CommunicationManager.Instance.AnnounceNewPlayer(Id, Position);
 		}
 	}

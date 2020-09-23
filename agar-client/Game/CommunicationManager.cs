@@ -33,33 +33,30 @@ namespace agar_client
 				.WithUrl(SERVER_URL+"/gamehub")
 				.Build();
 
-			connection.Closed += async (error) =>
-			{
+            connection.Closed += async (error) =>
+            {
                 connected = false;
                 if (ConnectionLost != null)
                     ConnectionLost.Invoke();
                 Logger.Log("CONNECTION LOST");
                 await Task.Delay(new Random().Next(0, 5) * 1000);
-				await connection.StartAsync();
+	            await connection.StartAsync();
             };
             connection.Reconnected += async (connectionId) =>
             {
                 connected = true;
                 Logger.Log("RECONNECTED");
             };
-		}
+        }
 
-        private async Task connect(/*object sender, RoutedEventArgs e*/)
+        // --- RECEIVING METHODS ---
+
+        private async Task connect()
         {
             connection.On("ReceiveMessage", (string message) =>
             {
                 GameManager.MainWindow.Dispatcher.Invoke(() =>
                 {
-                    //var newMessage = $"Received: user: {user}, msg: {message}";
-                    //var newMessage = message;
-                    //messagesList.Items.Add(newMessage);
-                    //Debug.WriteLine(newMessage);
-                    
                     Logger.Log("Received message: " + message);
 				});
             });
@@ -77,9 +74,7 @@ namespace agar_client
             {
                 GameManager.MainWindow.Dispatcher.Invoke(() =>
                 {
-                    Debug.WriteLine("sda");
-					//Debug.WriteLine($"New player receive. ID: {id}, {position}");
-					//GameManager.Instance.CreatePlayer(id, position);
+                    //Debug.WriteLine("get game state");
                 });
             });
 
@@ -92,34 +87,11 @@ namespace agar_client
                 });
             });
 
-            /*connection.On("AnnounceNewPlayer", (MapObject obj) =>
-            {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
-                {
-                    //Logger.Log("New player receive: " + id);
-                    GameManager.Instance.CreatePlayer(obj.Id, obj.Position);
-                });
-            });
-
-            connection.On("MoveObject", (MapObject obj) =>
-            {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
-                {
-                    //Logger.Log($"Move receive: {id} @ {position}");
-                    GameManager.Instance.MovePlayer(obj.Id, obj.Position);
-                });
-            });*/
-
+            // --- CONNECTING ---
 
             try
-			{
+            {
 				await connection.StartAsync();
-                //messagesList.Items.Add("Connection started");
-                //connectButton.IsEnabled = false;
-                //sendButton.IsEnabled = true;
-
-                //Debug.WriteLine("SUCCESSFULLY CONNECTED");
-                //MainWindow.Log()
                 connected = true;
                 //GetGameState(LocalPlayer.Instance.Id);
 
@@ -133,6 +105,8 @@ namespace agar_client
                 Debug.WriteLine($"CONNECTION FAILED: {ex.Message}");
 			}
 		}
+
+        // --- SENDING METHODS ---
 
         public async void AnnounceNewPlayer(string id, Point position)
         {
@@ -168,49 +142,5 @@ namespace agar_client
             else
                 throw new Exception();
         }
-
-
-        /*public async void AnnounceNewPlayer(MapObject newPlayer)
-        {
-            await connect();
-
-            if (connected)
-            {
-                Debug.WriteLine($"New player send. ID: {newPlayer.Id}, X: {newPlayer.Position.X}, Y: {newPlayer.Position.Y}");
-                connection.InvokeAsync("AnnounceNewPlayer", newPlayer);
-            }
-            else
-                throw new Exception();
-        }
-
-        public async void MoveObject(MapObject obj)
-        {
-            if (connected)
-            {
-                Debug.WriteLine($"Move send. ID: {obj.Id}, {obj.Position}");
-                connection.InvokeAsync("MoveObject", obj);
-            }
-            else
-                throw new Exception();
-        }*/
-
-        /*private async void sendButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                await connection.InvokeAsync("SendMessage",
-                    userTextBox.Text, messageTextBox.Text);
-            }
-            catch (Exception ex)
-            {
-                messagesList.Items.Add(ex.Message);
-            }
-        }*/
-
-        /*public async void sendMessage(string message)
-		{
-            Debug.WriteLine($"Sending: {message}");
-            await connection.InvokeAsync("SendMessage", message);
-		}*/
     }
 }

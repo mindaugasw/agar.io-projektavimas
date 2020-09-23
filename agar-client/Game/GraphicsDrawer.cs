@@ -16,9 +16,6 @@ namespace agar_client
 	{
 		public static GraphicsDrawer Instance;
 		Canvas GameCanvas;
-		//Shape Player;
-
-		//System.Windows.Point PlayerPosition;
 
 		public GraphicsDrawer()
 		{
@@ -27,39 +24,8 @@ namespace agar_client
 			else
 				throw new Exception();
 
-			//Player = GameManager.MainWindow.playerEllipse;
 			GameCanvas = GameManager.MainWindow.gameCanvas;
-			//PlayerPosition = GetPlayerPosition(); // Throws exception on main window
 		}
-
-		/*public void PlayerTranslate(System.Windows.Point translation)
-		{
-			*if (PlayerPosition == null)
-				PlayerPosition = GetPlayerPosition(); // Should be in constructor but throws up*
-
-			//Debug.WriteLine($"Starting pos: {PlayerPosition}");
-			//Debug.WriteLine($"Translation: {translation}");
-
-			//PlayerPosition = PlayerPosition.Add(translation);
-			//Debug.WriteLine($"Added: {PlayerPosition}");
-
-			//Canvas.SetLeft(Player, PlayerPosition.X);
-			//Canvas.SetTop(Player, PlayerPosition.Y);
-
-			//Debug.WriteLine($"After set: {GetPlayerPosition()}");
-		}*/
-
-		/*public Point GetPlayerPosition()
-		{
-			Point relativeTo = new Point(0, 0);
-			return Player.PointToScreen(relativeTo);
-		}*/
-		/*public void SetPlayerPosition(Point newPosition)
-		{
-			Canvas.SetLeft(Player, newPosition.X);
-			Canvas.SetTop(Player, newPosition.Y);
-			PlayerPosition = newPosition;
-		}*/
 
 
 
@@ -96,7 +62,7 @@ namespace agar_client
 		public static Utils.Point GetShapePosition(Shape shape)
 		{
 			Utils.Point relativeTo = new Utils.Point();
-			return shape.PointToScreen(relativeTo); // TODO. Not working / working weirdly
+			return shape.PointToScreen(relativeTo); // TODO. Not working, returns wrong position
 		}*/
 	}
 }

@@ -32,8 +32,6 @@ namespace agar_server.Hubs
             Debug.WriteLine($"New player. ID: {id}, X: {position.X}, Y: {position.Y}");
             Clients.Others.SendAsync("AnnounceNewPlayer", id, position);
             players.Add(id, position);
-
-            
         }
 
         public async Task GetGameState(string id)
@@ -47,17 +45,5 @@ namespace agar_server.Hubs
             Debug.WriteLine($"Move. ID: {id}, X: {position.X}, Y: {position.Y}");
             Clients.Others.SendAsync("MoveObject", id, position);
         }
-        
-        /*public async Task AnnounceNewPlayer(MapObject obj)
-		{
-            Debug.WriteLine($"New player. ID: {obj.Id}, X: {obj.Position.X}, Y: {obj.Position.Y}");
-            Clients.Others.SendAsync("AnnounceNewPlayer", obj);
-        }
-
-        public async Task MoveObject(MapObject obj)
-        {
-            Debug.WriteLine($"Move. ID: {obj.Id}, X: {obj.Position.X}, Y: {obj.Position.Y}");
-            Clients.Others.SendAsync("MoveObject", obj);
-        }*/
     }
 }
