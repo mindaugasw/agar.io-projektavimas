@@ -65,16 +65,19 @@ namespace agar_client
             {
                 GameManager.MainWindow.Dispatcher.Invoke(() =>
                 {
-                    Debug.WriteLine($"New player receive. ID: {id}, {position}");
+                    Logger.Log($"New player joined, Id: {id}");
                     GameManager.Instance.CreatePlayer(id, position);
                 });
             });
 
-            connection.On("GetGameState", (int[] x) =>
+            connection.On("GetGameState", (string[] ids, Point[] positions) =>
             {
                 GameManager.MainWindow.Dispatcher.Invoke(() =>
                 {
-                    //Debug.WriteLine("get game state");
+                    Logger.Log($"Received game state: {ids.Length} other players currently in-game");
+                    for (int i = 0; i < ids.Length; i++)
+                        GameManager.Instance.CreatePlayer(ids[i], positions[i]);
+
                 });
             });
 
@@ -93,7 +96,6 @@ namespace agar_client
             {
 				await connection.StartAsync();
                 connected = true;
-                //GetGameState(LocalPlayer.Instance.Id);
 
                 Logger.Log("CONNECTION ESTABLISHED to " + SERVER_URL);
                 if (ConnectedSuccessfully != null)

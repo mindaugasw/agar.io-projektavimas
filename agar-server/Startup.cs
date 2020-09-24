@@ -6,6 +6,7 @@ using agar_server.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +26,11 @@ namespace agar_server
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
+
+			services.AddDbContext<AgarDbContext>(options =>
+			{
+				options.UseInMemoryDatabase(databaseName: "AgarIo");
+			});
 
 			services.AddSignalR();
 		}

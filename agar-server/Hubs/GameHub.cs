@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using agar_server.Game;
 using agar_server.Game.Objects;
 using Microsoft.AspNetCore.SignalR;
+using static agar_server.Game.Utils;
 
 namespace agar_server.Hubs
 {
@@ -14,8 +14,11 @@ namespace agar_server.Hubs
 	{
         Dictionary<string, Point> players = new Dictionary<string, Point>();
 
-        public GameHub()
+        AgarDbContext context;
+
+        public GameHub(AgarDbContext context)
         {
+            this.context = context;
         }
 
         public async Task SendMessage(string message)
@@ -30,15 +33,26 @@ namespace agar_server.Hubs
         public async Task AnnounceNewPlayer(string id, Point position)
 		{
             Debug.WriteLine($"New player. ID: {id}, X: {position.X}, Y: {position.Y}");
-            Clients.Others.SendAsync("AnnounceNewPlayer", id, position);
-            players.Add(id, position);
-        }
 
-        public async Task GetGameState(string id)
-		{
-            var x = new int [1, 2, 3];
-            Clients.Caller.SendAsync("GetGameState", x as object);
-		}
+            var newPlayer = new MapObject() { Id = id, Position = position };
+            context.Players.Add(newPlayer);
+            //context.SaveChanges();
+
+            Clients.Others.SendAsync("AnnounceNewPlayer", id, position);
+
+			//var playersList = context.Players.Where(plr => plr.Id != id).ToArray();
+			var playersList = context.Players; // Filtering not needed, as current player is not yet saved to DB
+
+            // Sending whole MapObject does not work, so sending ids and positions separately
+            // Sending arrays (rather than lists) works more reliably
+
+            var ids = context.Players.Select(plr => plr.Id).ToArray();
+            var positions = context.Players.Select(plr => plr.Position).ToArray();
+
+            Clients.Caller.SendAsync("GetGameState", ids, positions); 
+
+            context.SaveChanges();
+        }
 
         public async Task MoveObject(string id, Point position)
         {
