@@ -11,7 +11,6 @@ namespace agar_client
 	class GameManager
 	{
 		public static GameManager Instance;
-		public static MainWindow MainWindow;
 
 		public static Random Random;
 
@@ -19,25 +18,23 @@ namespace agar_client
 		Dictionary<string, Player> players = new Dictionary<string, Player>();
 
 
-		public GameManager(MainWindow mainWindow)
+		public GameManager()
 		{
 			if (Instance == null)
 				Instance = this;
 			else
 				throw new Exception();
 
-			MainWindow = mainWindow;
 
 			Random = new Random();
 
-			new CommunicationManager();
+			//new CommunicationManager(); // Changed to Singleton-instatiation
 			new InputHandler();
 			new GraphicsDrawer();
 
 			Logger.Log("All services initialized");
 
 			LocalPlayer = new LocalPlayer();
-
 		}
 
 		public void CreatePlayer(string id, Point position)

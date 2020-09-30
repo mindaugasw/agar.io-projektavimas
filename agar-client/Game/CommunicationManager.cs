@@ -12,22 +12,38 @@ namespace agar_client
 {
 	class CommunicationManager
 	{
+        // FIELDS
         public const string SERVER_URL = "https://localhost:44372";
-
-		public static CommunicationManager Instance;
 
         public event BasicDelegate ConnectedSuccessfully;
         public event BasicDelegate ConnectionLost;
 
+        static CommunicationManager instance;
+        static object threadLock = new object();
+
         HubConnection connection;
         bool connected = false;
 
+        // PROPERTIES
+        public static CommunicationManager Instance // Design pattern #1.2 Singleton
+		{
+            get
+			{
+                lock(threadLock)
+				{
+                    if (instance == null)
+                        instance = new CommunicationManager();
+				}
+                return instance;
+			}
+		}
+
         public CommunicationManager()
 		{
-			if (Instance == null)
+			/*if (Instance == null)
 				Instance = this;
 			else
-				throw new Exception();
+				throw new Exception();*/
 
 			connection = new HubConnectionBuilder()
 				.WithUrl(SERVER_URL+"/gamehub")
@@ -55,7 +71,7 @@ namespace agar_client
         {
             connection.On("ReceiveMessage", (string message) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Logger.Log("Received message: " + message);
 				});
@@ -63,7 +79,7 @@ namespace agar_client
 
             connection.On("AnnounceNewPlayer", (string id, Point position) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Logger.Log($"New player joined, Id: {id}");
                     GameManager.Instance.CreatePlayer(id, position);
@@ -72,7 +88,7 @@ namespace agar_client
 
             connection.On("GetGameState", (string[] ids, Point[] positions) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Logger.Log($"Received game state: {ids.Length} other players currently in-game");
                     for (int i = 0; i < ids.Length; i++)
@@ -83,7 +99,7 @@ namespace agar_client
 
             connection.On("MoveObject", (string id, Point position) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Debug.WriteLine($"Move receive. ID: {id}, {position}");
                     GameManager.Instance.MovePlayer(id, position);
@@ -94,12 +110,12 @@ namespace agar_client
 
             try
             {
-				await connection.StartAsync();
+                await connection.StartAsync();
                 connected = true;
 
                 Logger.Log("CONNECTION ESTABLISHED to " + SERVER_URL);
                 if (ConnectedSuccessfully != null)
-					ConnectedSuccessfully.Invoke();
+                    ConnectedSuccessfully.Invoke();
 			}
 			catch (Exception ex)
 			{
