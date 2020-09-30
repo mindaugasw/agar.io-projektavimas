@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static agar_client.Game.Utils;
@@ -77,6 +78,11 @@ namespace agar_client
                     Logger.Log($"Received game state: {ids.Length} other players currently in-game");
                     for (int i = 0; i < ids.Length; i++)
                         GameManager.Instance.CreatePlayer(ids[i], positions[i]);
+                    if (ids.Length == 0)
+                    {
+                        GameManager.Instance.CreateFoodObjects();
+                        GameManager.Instance.SendMapObjects();
+                    }
 
                 });
             });
@@ -87,6 +93,15 @@ namespace agar_client
                 {
                     Debug.WriteLine($"Move receive. ID: {id}, {position}");
                     GameManager.Instance.MovePlayer(id, position);
+                });
+            });
+
+            connection.On("ReceiveMapObjects", (string[] ids, string[] mapObjectNames, Point[] positions) =>
+            {
+                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                {
+                    Debug.WriteLine("Received map objects.");
+                    GameManager.Instance.ReceiveMapObjects(ids, mapObjectNames, positions);
                 });
             });
 
@@ -140,6 +155,17 @@ namespace agar_client
             {
                 Debug.WriteLine($"Move send. ID: {id}, {position}");
                 connection.InvokeAsync("MoveObject", id, position);
+            }
+            else
+                throw new Exception();
+        }
+
+        public async void CreateMapObjects(string[] ids, string[] mapObjectNames, Point[] positions) 
+        {
+            if (connected)
+            {
+                Debug.WriteLine("Sending map objects.");
+                connection.InvokeAsync("CreateMapObjects", ids, mapObjectNames, positions);
             }
             else
                 throw new Exception();

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Pipelines;
 using System.Linq;
 using System.Threading.Tasks;
 using agar_server.Game;
 using agar_server.Game.Objects;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using static agar_server.Game.Utils;
+
 
 namespace agar_server.Hubs
 {
 	public class GameHub : Hub
 	{
         Dictionary<string, Point> players = new Dictionary<string, Point>();
+
 
         AgarDbContext context;
 
@@ -34,7 +38,7 @@ namespace agar_server.Hubs
 		{
             Debug.WriteLine($"New player. ID: {id}, X: {position.X}, Y: {position.Y}");
 
-            var newPlayer = new MapObject() { Id = id, Position = position };
+            var newPlayer = new Player() { Id = id, Position = position };
             context.Players.Add(newPlayer);
             //context.SaveChanges();
 
@@ -49,8 +53,43 @@ namespace agar_server.Hubs
             var ids = context.Players.Select(plr => plr.Id).ToArray();
             var positions = context.Players.Select(plr => plr.Position).ToArray();
 
-            Clients.Caller.SendAsync("GetGameState", ids, positions); 
+            Clients.Caller.SendAsync("GetGameState", ids, positions);
 
+            if (context.Food.Count() > 1)
+            {
+                Debug.WriteLine("Sending map objects to other clients.");
+                List<Food> mapObjects = context.Food.ToList();
+                //Debug.WriteLine($"{context.Players.Count()} {context.Food.Count()}");
+
+                ids = mapObjects.Select(x => x.Id).ToArray();
+                var names = mapObjects.Select(x => x.Name).ToArray();
+                positions = mapObjects.Select(x => x.Position).ToArray();
+
+                Clients.Caller.SendAsync("ReceiveMapObjects", ids, names, positions);
+            }
+
+
+            context.SaveChanges();
+        }
+
+
+        public async Task CreateMapObjects(string[] ids, string[] mapObjectNames, Point[] positions) 
+        {
+            for (int i = 0; i < ids.Length; i++)
+            {
+                Debug.WriteLine($"Created map object. ID: {ids[i]}, Name: {mapObjectNames[i]}, X: {positions[i].X}, Y: {positions[i].Y}");
+                switch (mapObjectNames[i])
+                {
+                    case "GreenFood":
+                        var newFood = new Food() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
+                        context.Food.Add(newFood);
+                        break;
+                    case "GreenVirus":
+                        var newVirus = new Virus() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
+                        context.Viruses.Add(newVirus);
+                        break;
+                }
+            }
             context.SaveChanges();
         }
 

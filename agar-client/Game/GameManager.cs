@@ -3,6 +3,7 @@ using agar_client.Game.Objects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using static agar_client.Game.Utils;
 
@@ -17,6 +18,7 @@ namespace agar_client
 
 		LocalPlayer LocalPlayer;
 		Dictionary<string, Player> players = new Dictionary<string, Player>();
+		List<Food> food = new List<Food>();
 
 
 		public GameManager(MainWindow mainWindow)
@@ -38,6 +40,35 @@ namespace agar_client
 
 			LocalPlayer = new LocalPlayer();
 
+		}
+
+		public void CreateFoodObjects() 
+		{
+			AbstractFactory foodFactory = new FoodFactory();
+			food = foodFactory.createFoodObjects();
+		}
+
+		public void SendMapObjects() 
+		{
+			List<MapObject> mapObjects = new List<MapObject>();
+			mapObjects.AddRange(food);
+			CommunicationManager.Instance.CreateMapObjects(mapObjects.Select(x => x.Id).ToArray(), mapObjects.Select(x => x.Name).ToArray(), mapObjects.Select(x => x.Position).ToArray());
+		}
+
+		public void ReceiveMapObjects(string[] ids, string[] mapObjectNames, Point[] positions)
+		{
+            for (int i = 0; i < ids.Length; i++)
+			{
+				Debug.WriteLine(positions[i]);
+				switch (mapObjectNames[i])
+				{
+					case "GreenFood":
+						food.Add(new GreenFood(ids[i], mapObjectNames[i], positions[i]));
+						break;
+					case "GreenVirus":
+						break;
+				}
+			}
 		}
 
 		public void CreatePlayer(string id, Point position)
