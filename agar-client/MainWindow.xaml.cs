@@ -25,16 +25,32 @@ namespace agar_client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public static MainWindow Instance;
-
+		// FIELDS
 		public event StringDelegate ArrowKeysInput;
+
+		static MainWindow instance;
+		static object threadLock = new object();
+
+		// PROPERTIES
+		public static MainWindow Instance // Design pattern #1.1 Singleton
+		{
+			get
+			{
+				if (instance == null)
+					throw new Exception();
+				return instance;
+			}
+		}
 
 		public MainWindow()
 		{
-			if (Instance == null)
-				Instance = this;
-			else
-				throw new Exception();
+			lock (threadLock)
+			{
+				if (instance == null)
+					instance = this;
+				else
+					throw new Exception();
+			}
 
 			InitializeComponent();
 
@@ -50,7 +66,7 @@ namespace agar_client
 
 		private void connectButton_Click(object sender, RoutedEventArgs e)
 		{
-			new GameManager(this);
+			new GameManager();
 			CommunicationManager.Instance.ConnectedSuccessfully += OnConnectionEstablished;
 			CommunicationManager.Instance.ConnectionLost += OnConnectionLost;
 

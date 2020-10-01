@@ -15,7 +15,7 @@ namespace agar_server.Hubs
 {
 	public class GameHub : Hub
 	{
-        Dictionary<string, Point> players = new Dictionary<string, Point>();
+        //Dictionary<string, Point> players = new Dictionary<string, Point>();
 
 
         AgarDbContext context;
@@ -97,6 +97,9 @@ namespace agar_server.Hubs
         {
             Debug.WriteLine($"Move. ID: {id}, X: {position.X}, Y: {position.Y}");
             Clients.Others.SendAsync("MoveObject", id, position);
+
+            context.Players.Where(plr => plr.Id == id).First().Position = position;
+            context.SaveChanges();
         }
     }
 }

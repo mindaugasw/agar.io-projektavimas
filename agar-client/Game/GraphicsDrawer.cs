@@ -24,7 +24,7 @@ namespace agar_client
 			else
 				throw new Exception();
 
-			GameCanvas = GameManager.MainWindow.gameCanvas;
+			GameCanvas = MainWindow.Instance.gameCanvas;
 		}
 
 
