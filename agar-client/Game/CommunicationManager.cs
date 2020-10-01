@@ -114,7 +114,7 @@ namespace agar_client
 
             connection.On("ReceiveMapObjects", (string[] ids, string[] mapObjectNames, Point[] positions) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Debug.WriteLine("Received map objects.");
                     GameManager.Instance.ReceiveMapObjects(ids, mapObjectNames, positions);
