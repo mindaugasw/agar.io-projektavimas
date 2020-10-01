@@ -6,6 +6,6 @@ namespace agar_client.Game.Objects
 {
     abstract class AbstractFactory
     {
-        public abstract List<Food> createFoodObjects();
+        public abstract void createMapObjects();
     }
 }

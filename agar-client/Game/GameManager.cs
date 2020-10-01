@@ -17,8 +17,9 @@ namespace agar_client
 
 		LocalPlayer LocalPlayer;
 		Dictionary<string, Player> players = new Dictionary<string, Player>();
-		List<Food> food = new List<Food>();
 
+		List<Food> food = new List<Food>();
+		List<Virus> viruses = new List<Virus>();
 
 		public GameManager()
 		{
@@ -42,13 +43,22 @@ namespace agar_client
 		public void CreateFoodObjects() 
 		{
 			AbstractFactory foodFactory = new FoodFactory();
-			food = foodFactory.createFoodObjects();
+			foodFactory.createMapObjects();
+			food = FoodFactory.Instance.food;
+		}
+
+		public void CreateVirusObjects() 
+		{
+			AbstractFactory virusFactory = new VirusFactory();
+			virusFactory.createMapObjects();
+			viruses = VirusFactory.Instance.viruses;
 		}
 
 		public void SendMapObjects() 
 		{
 			List<MapObject> mapObjects = new List<MapObject>();
 			mapObjects.AddRange(food);
+			mapObjects.AddRange(viruses);
 			CommunicationManager.Instance.CreateMapObjects(mapObjects.Select(x => x.Id).ToArray(), mapObjects.Select(x => x.Name).ToArray(), mapObjects.Select(x => x.Position).ToArray());
 		}
 
@@ -63,6 +73,7 @@ namespace agar_client
 						food.Add(new GreenFood(ids[i], mapObjectNames[i], positions[i]));
 						break;
 					case "GreenVirus":
+						viruses.Add(new GreenVirus(ids[i], mapObjectNames[i], positions[i]));
 						break;
 				}
 			}

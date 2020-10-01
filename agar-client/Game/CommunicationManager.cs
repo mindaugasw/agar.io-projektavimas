@@ -97,6 +97,7 @@ namespace agar_client
                     if (ids.Length == 0)
                     {
                         GameManager.Instance.CreateFoodObjects();
+                        GameManager.Instance.CreateVirusObjects();
                         GameManager.Instance.SendMapObjects();
                     }
 
