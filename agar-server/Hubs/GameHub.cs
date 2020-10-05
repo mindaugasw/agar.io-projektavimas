@@ -58,9 +58,6 @@ namespace agar_server.Hubs
             if (context.Food.Count() > 1)
             {
                 Debug.WriteLine("Sending map objects to other clients.");
-                //List<Food> mapObjects = context.Food.ToList();
-
-                //Debug.WriteLine($"{context.Players.Count()} {context.Food.Count()}");
                 MapObject[] food = context.Food.ToArray();
                 MapObject[] viruses = context.Viruses.ToArray();
                 List<MapObject> mapObjects = food.Concat(viruses).ToList();
@@ -84,10 +81,12 @@ namespace agar_server.Hubs
                 switch (mapObjectNames[i])
                 {
                     case "GreenFood":
+                    case "RedFood":
                         var newFood = new Food() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
                         context.Food.Add(newFood);
                         break;
                     case "GreenVirus":
+                    case "RedVirus":
                         var newVirus = new Virus() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
                         context.Viruses.Add(newVirus);
                         break;

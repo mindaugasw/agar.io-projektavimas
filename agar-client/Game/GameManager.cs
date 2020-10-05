@@ -72,8 +72,14 @@ namespace agar_client
 					case "GreenFood":
 						food.Add(new GreenFood(ids[i], mapObjectNames[i], positions[i]));
 						break;
+					case "RedFood":
+						food.Add(new RedFood(ids[i], mapObjectNames[i], positions[i]));
+						break;
 					case "GreenVirus":
 						viruses.Add(new GreenVirus(ids[i], mapObjectNames[i], positions[i]));
+						break;
+					case "RedVirus":
+						viruses.Add(new RedVirus(ids[i], mapObjectNames[i], positions[i]));
 						break;
 				}
 			}

@@ -18,10 +18,17 @@ namespace agar_client.Game.Objects
         }
         public override void createMapObjects()
         {
-            for (int i = 0; i < 3; i++)
+            var r = GameManager.Random;
+            var gCount = r.Next(0, 5);
+            var rCount = 4 - gCount;
+
+            for (int i = 0; i < gCount; i++)
             {
-                var newFood = new GreenVirus();
-                viruses.Add(newFood);
+                viruses.Add(new GreenVirus());
+            }
+            for (int i = 0; i < rCount; i++)
+            {
+                viruses.Add(new RedVirus());
             }
         }
     }
