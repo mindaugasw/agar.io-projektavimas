@@ -1,5 +1,6 @@
 ﻿using agar_client.Game;
 using agar_client.Game.Objects;
+using agar_client.Game.Objects.Factory;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,6 +21,7 @@ namespace agar_client
 
 		List<Food> food = new List<Food>();
 		List<Virus> viruses = new List<Virus>();
+		List<Poison> poison = new List<Poison>();
 
 		public GameManager()
 		{
@@ -54,11 +56,19 @@ namespace agar_client
 			viruses = VirusFactory.Instance.viruses;
 		}
 
+		public void CreatePoisonObjects()
+		{
+			PoisonFactory poisonFactory = new PoisonFactory();
+			poisonFactory.createPoisonObjects();
+			poison = PoisonFactory.Instance.poison;
+		}
+
 		public void SendMapObjects() 
 		{
 			List<MapObject> mapObjects = new List<MapObject>();
 			mapObjects.AddRange(food);
 			mapObjects.AddRange(viruses);
+			mapObjects.AddRange(poison);
 			CommunicationManager.Instance.CreateMapObjects(mapObjects.Select(x => x.Id).ToArray(), mapObjects.Select(x => x.Name).ToArray(), mapObjects.Select(x => x.Position).ToArray());
 		}
 
@@ -80,6 +90,9 @@ namespace agar_client
 						break;
 					case "RedVirus":
 						viruses.Add(new RedVirus(ids[i], mapObjectNames[i], positions[i]));
+						break;
+					case "BluePoison":
+						poison.Add(new BluePoison(ids[i], mapObjectNames[i], positions[i]));
 						break;
 				}
 			}

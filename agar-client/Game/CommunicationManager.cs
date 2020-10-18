@@ -98,6 +98,7 @@ namespace agar_client
                     {
                         GameManager.Instance.CreateFoodObjects();
                         GameManager.Instance.CreateVirusObjects();
+                        GameManager.Instance.CreatePoisonObjects();
                         GameManager.Instance.SendMapObjects();
                     }
 

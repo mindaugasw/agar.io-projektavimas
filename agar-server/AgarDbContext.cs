@@ -17,5 +17,6 @@ namespace agar_server
 		public DbSet<Player> Players { get; set; }
 		public DbSet<Food> Food { get; set; }
 		public DbSet<Virus> Viruses { get; set; }
+		public DbSet<Poison> Poison { get; set; }
 	}
 }

@@ -60,7 +60,8 @@ namespace agar_server.Hubs
                 Debug.WriteLine("Sending map objects to other clients.");
                 MapObject[] food = context.Food.ToArray();
                 MapObject[] viruses = context.Viruses.ToArray();
-                List<MapObject> mapObjects = food.Concat(viruses).ToList();
+                MapObject[] poison = context.Poison.ToArray();
+                List<MapObject> mapObjects = food.Concat(viruses).Concat(poison).ToList();
                 ids = mapObjects.Select(x => x.Id).ToArray();
                 var names = mapObjects.Select(x => x.Name).ToArray();
                 positions = mapObjects.Select(x => x.Position).ToArray();
@@ -89,6 +90,10 @@ namespace agar_server.Hubs
                     case "RedVirus":
                         var newVirus = new Virus() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
                         context.Viruses.Add(newVirus);
+                        break;
+                    case "BluePoison":
+                        var newPoison = new Poison() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
+                        context.Poison.Add(newPoison);
                         break;
                 }
             }
