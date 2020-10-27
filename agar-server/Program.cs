@@ -21,6 +21,7 @@ namespace agar_server
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
+					webBuilder.UseUrls("http://localhost:3000/");
 				});
 	}
 }

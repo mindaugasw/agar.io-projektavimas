@@ -12,7 +12,7 @@ namespace agar_client
 {
 	class CommunicationManager
 	{
-        public const string SERVER_URL = "https://localhost:44372";
+        public const string SERVER_URL = "http://localhost:3000";
 
 		public static CommunicationManager Instance;
 
