@@ -52,7 +52,7 @@ namespace agar_client
 						throw new Exception();
 				}
 
-				translation = translation * LocalPlayer.PLAYER_MOVE_SPEED;
+				translation = translation * lp.playerMoveSpeed();
 				lp.Position += translation;
 				GraphicsDrawer.MoveShape(lp.Shape, lp.Position);
 				CommunicationManager.Instance.MoveObject(lp.Id, lp.Position);

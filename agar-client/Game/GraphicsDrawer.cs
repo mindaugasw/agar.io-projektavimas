@@ -24,7 +24,7 @@ namespace agar_client
 			else
 				throw new Exception();
 
-			GameCanvas = GameManager.MainWindow.gameCanvas;
+			GameCanvas = MainWindow.Instance.gameCanvas;
 		}
 
 
@@ -32,6 +32,28 @@ namespace agar_client
 		public static Ellipse CreateNewEllipse(int size, System.Windows.Media.Color color, Utils.Point position)
 		{
 			Ellipse e = new Ellipse();
+			Instance.GameCanvas.Children.Add(e);
+			e.Width = size;
+			e.Height = size;
+			e.Fill = new SolidColorBrush(color);
+			e.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
+			e.StrokeThickness = 2;
+			MoveShape(e, position);
+			return e;
+		}
+
+		public static Polygon CreateNewVirus(int size, System.Windows.Media.Color color, Utils.Point position)
+		{
+			PointCollection p = new PointCollection();
+			p.Add(new System.Windows.Point(0, 25));
+			p.Add(new System.Windows.Point(20, 20));
+			p.Add(new System.Windows.Point(25, 0));
+			p.Add(new System.Windows.Point(30, 20));
+			p.Add(new System.Windows.Point(50, 25));
+			p.Add(new System.Windows.Point(30, 30));
+			p.Add(new System.Windows.Point(25, 50));
+			p.Add(new System.Windows.Point(20, 30));
+			Polygon e = new Polygon() { Points = p };
 			Instance.GameCanvas.Children.Add(e);
 			e.Width = size;
 			e.Height = size;

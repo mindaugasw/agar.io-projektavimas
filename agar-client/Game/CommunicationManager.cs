@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static agar_client.Game.Utils;
@@ -12,22 +13,40 @@ namespace agar_client
 {
 	class CommunicationManager
 	{
-        public const string SERVER_URL = "http://localhost:3000";
-
-		public static CommunicationManager Instance;
+        public const int PORT = 3000;
+        public string SERVER_URL = "http://localhost:"+PORT;
+        // FIELDS
+        // public const string SERVER_URL = "https://localhost:44372";
 
         public event BasicDelegate ConnectedSuccessfully;
         public event BasicDelegate ConnectionLost;
 
+        static CommunicationManager instance;
+        static object threadLock = new object();
+
         HubConnection connection;
         bool connected = false;
 
+        // PROPERTIES
+        public static CommunicationManager Instance // Design pattern #1.2 Singleton
+		{
+            get
+			{
+                lock(threadLock)
+				{
+                    if (instance == null)
+                        instance = new CommunicationManager();
+				}
+                return instance;
+			}
+		}
+
         public CommunicationManager()
 		{
-			if (Instance == null)
+			/*if (Instance == null)
 				Instance = this;
 			else
-				throw new Exception();
+				throw new Exception();*/
 
 			connection = new HubConnectionBuilder()
 				.WithUrl(SERVER_URL+"/gamehub")
@@ -55,7 +74,7 @@ namespace agar_client
         {
             connection.On("ReceiveMessage", (string message) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Logger.Log("Received message: " + message);
 				});
@@ -63,7 +82,7 @@ namespace agar_client
 
             connection.On("AnnounceNewPlayer", (string id, Point position) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Logger.Log($"New player joined, Id: {id}");
                     GameManager.Instance.CreatePlayer(id, position);
@@ -72,21 +91,37 @@ namespace agar_client
 
             connection.On("GetGameState", (string[] ids, Point[] positions) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Logger.Log($"Received game state: {ids.Length} other players currently in-game");
                     for (int i = 0; i < ids.Length; i++)
                         GameManager.Instance.CreatePlayer(ids[i], positions[i]);
+                    if (ids.Length == 0)
+                    {
+                        GameManager.Instance.CreateFoodObjects();
+                        GameManager.Instance.CreateVirusObjects();
+                        GameManager.Instance.CreatePoisonObjects();
+                        GameManager.Instance.SendMapObjects();
+                    }
 
                 });
             });
 
             connection.On("MoveObject", (string id, Point position) =>
             {
-                GameManager.MainWindow.Dispatcher.Invoke(() =>
+                MainWindow.Instance.Dispatcher.Invoke(() =>
                 {
                     Debug.WriteLine($"Move receive. ID: {id}, {position}");
                     GameManager.Instance.MovePlayer(id, position);
+                });
+            });
+
+            connection.On("ReceiveMapObjects", (string[] ids, string[] mapObjectNames, Point[] positions) =>
+            {
+                MainWindow.Instance.Dispatcher.Invoke(() =>
+                {
+                    Debug.WriteLine("Received map objects.");
+                    GameManager.Instance.ReceiveMapObjects(ids, mapObjectNames, positions);
                 });
             });
 
@@ -94,12 +129,12 @@ namespace agar_client
 
             try
             {
-				await connection.StartAsync();
+                await connection.StartAsync();
                 connected = true;
 
                 Logger.Log("CONNECTION ESTABLISHED to " + SERVER_URL);
                 if (ConnectedSuccessfully != null)
-					ConnectedSuccessfully.Invoke();
+                    ConnectedSuccessfully.Invoke();
 			}
 			catch (Exception ex)
 			{
@@ -140,6 +175,17 @@ namespace agar_client
             {
                 Debug.WriteLine($"Move send. ID: {id}, {position}");
                 connection.InvokeAsync("MoveObject", id, position);
+            }
+            else
+                throw new Exception();
+        }
+
+        public async void CreateMapObjects(string[] ids, string[] mapObjectNames, Point[] positions) 
+        {
+            if (connected)
+            {
+                Debug.WriteLine("Sending map objects.");
+                connection.InvokeAsync("CreateMapObjects", ids, mapObjectNames, positions);
             }
             else
                 throw new Exception();

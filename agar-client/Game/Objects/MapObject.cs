@@ -18,6 +18,9 @@ namespace agar_client.Game.Objects
 		[JsonPropertyName("position")]
 		public Point Position { get; set; }
 
+		[JsonPropertyName("name")]
+		public string Name { get; set; }
+
 		public Shape Shape;
 
 		public MapObject()

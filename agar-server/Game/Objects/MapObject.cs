@@ -9,22 +9,26 @@ namespace agar_server.Game.Objects
 	/// <summary>
 	/// An object that is displayed on the game map (e.g. an obstacle, player)
 	/// </summary>
-	public class MapObject
+	public abstract class MapObject
 	{
 		[JsonPropertyName("id")]
 		public string Id { get; set; } // Unique object indentifier across whole server
 
-		[JsonPropertyName("position")]
+        [JsonPropertyName("position")]
 		public Point Position { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
 
 		public MapObject()
 		{
 		}
-		public MapObject(string id, Point position)
+		public MapObject(string id, Point position, string name)
 		{
 			Id = id;
 			Position = position;
+			Name = name;
 		}
 	}
 }

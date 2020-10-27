@@ -8,13 +8,17 @@ namespace agar_client.Game.Objects
 	class Player : MapObject
 	{
 
-		public const int PLAYER_MOVE_SPEED = 35; // units per button press
+		//public int PLAYER_MOVE_SPEED = 35; // units per button press
+
+		private PlayerStrategy strategy;
 
 		public Player() : base()
 		{
+			strategy = new NormalStrategy();
 		}
 		public Player(string id, Point position) : base(id, position)
 		{
+			strategy = new NormalStrategy();
 		}
 
 		override public void CreateMapObject(Point? position)
@@ -27,6 +31,17 @@ namespace agar_client.Game.Objects
 			Position = position.Value;
 			var color = System.Windows.Media.Color.FromRgb((byte)r.Next(0, 256), (byte)r.Next(0, 256), (byte)r.Next(0, 256));
 			Shape = GraphicsDrawer.CreateNewEllipse(50, color, Position);
+		}
+
+		public int playerMoveSpeed()
+        {
+			return strategy.playerSpeed();
+		}
+
+		public void changeStrategy(PlayerStrategy newStrategy)
+        {
+			strategy = newStrategy;
+
 		}
 	}
 }
