@@ -6,12 +6,9 @@ namespace agar_client.Game.Objects.Bridge
 {
     class QuickDamageAction : Damage
     {
-        private Virus theVirus;
 
-        public QuickDamageAction(Virus newVirus)
+        public QuickDamageAction(Virus newVirus) : base(newVirus)
         {
-            this.theVirus = newVirus;
-            //base.newVirus;
         }
 
         override public void InflictDamage()
