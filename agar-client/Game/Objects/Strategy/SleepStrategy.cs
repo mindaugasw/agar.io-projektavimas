@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace agar_client.Game.Objects.Strategy
+namespace agar_client.Game.Objects
 {
-    class SleepStrategy
+    class SleepStrategy : PlayerStrategy
     {
+        public override int playerSpeed()
+        {
+            return 0;
+        }
     }
 }
