@@ -26,7 +26,7 @@ namespace agar_client
 	public partial class MainWindow : Window
 	{
 		// FIELDS
-		public event StringDelegate ArrowKeysInput;
+		public event StringDelegate ArrowKeysInput; // Design pattern #5.1 Observer
 
 		static MainWindow instance;
 		static object threadLock = new object();

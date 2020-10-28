@@ -16,7 +16,7 @@ namespace agar_client
         // FIELDS
         public const string SERVER_URL = "https://localhost:44372";
 
-        public event BasicDelegate ConnectedSuccessfully;
+        public event BasicDelegate ConnectedSuccessfully; // Design pattern #5.2 Observer
         public event BasicDelegate ConnectionLost;
 
         static CommunicationManager instance;
