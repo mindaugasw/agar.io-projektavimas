@@ -19,10 +19,9 @@ namespace agar_client.Game.Objects.Factory
 
         public void createPoisonObjects()
         {
-            for (int i = 0; i < 2; i++)
-            {
-                poison.Add(new BluePoison());
-            }
+            poison.Add(new BluePoison());
+            poison.Add(new CyanPoison());
+            poison.Add(new DarkBluePoison());
         }
     }
 }

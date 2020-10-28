@@ -92,6 +92,8 @@ namespace agar_server.Hubs
                         context.Viruses.Add(newVirus);
                         break;
                     case "BluePoison":
+                    case "CyanPoison":
+                    case "DarkBluePoison":
                         var newPoison = new Poison() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
                         context.Poison.Add(newPoison);
                         break;
