@@ -26,7 +26,7 @@ namespace agar_client.Game.Objects
 			var r = GameManager.Random;
 
 			if (!position.HasValue)
-				position = new System.Windows.Point(r.Next(0, 700), r.Next(0, 500)); // TODO remove hardcoded valus
+				position = new System.Windows.Point(r.Next(0, 700), r.Next(0, 500)); // TODO remove hardcoded values
 			
 			Position = position.Value;
 			var color = System.Windows.Media.Color.FromRgb((byte)r.Next(0, 256), (byte)r.Next(0, 256), (byte)r.Next(0, 256));
