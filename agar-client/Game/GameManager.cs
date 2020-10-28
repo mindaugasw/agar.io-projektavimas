@@ -1,5 +1,6 @@
 ﻿using agar_client.Game;
 using agar_client.Game.Objects;
+using agar_client.Game.Objects.Builder;
 using agar_client.Game.Objects.Factory;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,13 @@ namespace agar_client
 
 			Logger.Log("All services initialized");
 
-			LocalPlayer = new LocalPlayer();
+			//LocalPlayer = new LocalPlayer();
+
+			// Design pattern #6.1 Builder
+			var concreteBuilder = new LocalPlayerBuilder();
+			var director = new Director(concreteBuilder);
+			director.Construct();
+			LocalPlayer = (LocalPlayer)concreteBuilder.GetResult();
 		}
 
 		public void CreateFoodObjects() 
@@ -104,13 +111,26 @@ namespace agar_client
 					case "BluePoison":
 						poison.Add(new BluePoison(ids[i], mapObjectNames[i], positions[i]));
 						break;
+					case "CyanPoison":
+						poison.Add(new CyanPoison(ids[i], mapObjectNames[i], positions[i]));
+						break;
+					case "DarkBluePoison":
+						poison.Add(new DarkBluePoison(ids[i], mapObjectNames[i], positions[i]));
+						break;
 				}
 			}
 		}
 
 		public void CreatePlayer(string id, Point position)
 		{
-			var player = new Player(id, position);
+			//var player = new Player(id, position);
+
+			// Design pattern #6.2 Builder
+			var concreteBuilder = new OtherPlayerBuilder(id, position);
+			var director = new Director(concreteBuilder);
+			director.Construct();
+			var player = concreteBuilder.GetResult();
+
 			players.Add(id, player);
 		}
 

@@ -1,4 +1,4 @@
-﻿using agar_client.Game;
+﻿﻿using agar_client.Game;
 using agar_client.Game.Objects;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
