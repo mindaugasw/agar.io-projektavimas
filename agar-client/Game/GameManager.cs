@@ -44,9 +44,19 @@ namespace agar_client
 
 		public void CreateFoodObjects() 
 		{
-			AbstractFactory foodFactory = new FoodFactory();
-			foodFactory.createMapObjects();
-			food = FoodFactory.Instance.food;
+			// AbstractFactory foodFactory = new FoodFactory();
+			// foodFactory.createMapObjects();
+			// food = FoodFactory.Instance.food;
+
+			var redFood = new RedFood();
+
+			// TO SHOW HOW CLONE WORKS
+			var copy = redFood.Clone();
+			GraphicsDrawer.MoveShape(copy.Shape, new Utils.Point(150, 10));
+			GraphicsDrawer.MoveShape(redFood.Shape, new Utils.Point(200, 10));
+
+			Food bigGreenFood = new BigFoodDecorator(new GreenFood());
+
 		}
 
 		public void CreateVirusObjects() 
