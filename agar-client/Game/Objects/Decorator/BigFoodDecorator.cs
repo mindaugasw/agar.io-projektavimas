@@ -17,6 +17,7 @@ namespace agar_client.Game.Objects
             GraphicsDrawer.RemoveShape(this.Shape);
             this.size = 30;
 
+            var color = System.Windows.Media.Color.FromRgb(255, 0, 0);
             Shape = GraphicsDrawer.CreateNewEllipse(size, color, Position);
             Logger.Log(color);
         }
