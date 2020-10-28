@@ -101,6 +101,12 @@ namespace agar_client
 					case "BluePoison":
 						poison.Add(new BluePoison(ids[i], mapObjectNames[i], positions[i]));
 						break;
+					case "CyanPoison":
+						poison.Add(new CyanPoison(ids[i], mapObjectNames[i], positions[i]));
+						break;
+					case "DarkBluePoison":
+						poison.Add(new DarkBluePoison(ids[i], mapObjectNames[i], positions[i]));
+						break;
 				}
 			}
 		}
