@@ -13,7 +13,6 @@ namespace agar_client.Game.Objects.Bridge
 
         override public void InflictDamage()
         {
-
         }
     }
 }
