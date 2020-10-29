@@ -8,8 +8,9 @@ namespace agar_client.Game.Objects
     abstract class Food : MapObject
     {
 
-        protected int size;
+        public int size;
         protected System.Windows.Media.Color color;
+
 
         public Food() : base()
         {
@@ -22,5 +23,13 @@ namespace agar_client.Game.Objects
         public override void CreateMapObject(Point? position)
         {
         }
+
+        public Food Clone()
+        {
+            var copy = (Food) this.MemberwiseClone();
+            copy.Shape = GraphicsDrawer.CreateNewEllipse(copy.size, copy.color, copy.Position);
+            return (Food) copy;
+        }
+
     }
 }

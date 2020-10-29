@@ -86,5 +86,9 @@ namespace agar_client
 			Utils.Point relativeTo = new Utils.Point();
 			return shape.PointToScreen(relativeTo); // TODO. Not working, returns wrong position
 		}*/
+
+		public static void RemoveShape(Shape shape) {
+			Instance.GameCanvas.Children.Remove(shape);
+		}
 	}
 }
