@@ -13,12 +13,10 @@ namespace agar_client
 {
 	class CommunicationManager
 	{
-        public const int PORT = 3000;
-        public string SERVER_URL = "http://localhost:"+PORT;
         // FIELDS
-        // public const string SERVER_URL = "https://localhost:44372";
+        public readonly string SERVER_URL;
 
-        public event BasicDelegate ConnectedSuccessfully;
+		public event BasicDelegate ConnectedSuccessfully;
         public event BasicDelegate ConnectionLost;
 
         static CommunicationManager instance;
@@ -49,6 +47,7 @@ namespace agar_client
 				Instance = this;
 			else
 				throw new Exception();*/
+            SERVER_URL = ConfigManager.Get<string>("serverUrl");
 
             checkConnection = new CheckConnection();
 

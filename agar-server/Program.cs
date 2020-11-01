@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using agar_server.Game;
 
 namespace agar_server
 {
@@ -21,7 +22,11 @@ namespace agar_server
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
-					webBuilder.UseUrls("http://localhost:3000/");
+
+					if (ConfigManager.Get<bool>("useCustomUrl"))
+					{
+						webBuilder.UseUrls(ConfigManager.Get<string>("customUrl"));
+					}
 				});
 	}
 }
