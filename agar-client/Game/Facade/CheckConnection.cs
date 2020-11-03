@@ -7,12 +7,14 @@ namespace agar_client.Game.Objects
 {
 	class CheckConnection
 	{
-		public CheckConnection() 
+		HubConnection connection;
+		public CheckConnection(HubConnection connection) 
 		{
+			this.connection = connection;
 		}
 
-        public bool IsConnected(HubConnection connection) {
-            return connection.State == HubConnectionState.Connected;
+        public bool IsConnected() {
+            return this.connection.State == HubConnectionState.Connected;
         }
 	}
 }

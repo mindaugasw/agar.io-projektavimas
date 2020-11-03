@@ -25,7 +25,7 @@ namespace agar_client
         HubConnection connection;
         bool connected = false;
 
-        CheckConnection checkConnection;
+        ConnectionMessage connectionMessage;
 
         // PROPERTIES
         public static CommunicationManager Instance // Design pattern #1.2 Singleton
@@ -49,11 +49,11 @@ namespace agar_client
 				throw new Exception();*/
             SERVER_URL = ConfigManager.Get<string>("serverUrl");
 
-            checkConnection = new CheckConnection();
-
 			connection = new HubConnectionBuilder()
 				.WithUrl(SERVER_URL+"/gamehub")
 				.Build();
+
+            connectionMessage = new ConnectionMessage(connection);
 
             connection.Closed += async (error) =>
             {
@@ -151,47 +151,22 @@ namespace agar_client
         public async void AnnounceNewPlayer(string id, Point position)
         {
             await connect();
-
-            if (checkConnection.IsConnected(connection))
-            {
-                Debug.WriteLine($"New `player send. ID: {id}, {position}");
-                connection.InvokeAsync("AnnounceNewPlayer", id, position);
-            }
-            else
-                throw new Exception();
+            connectionMessage.SendMessage("AnnounceNewPlayer", id, position);
         }
 
         public async void GetGameState(string localPlayerId)
 		{
-            if (checkConnection.IsConnected(connection))
-            {
-                Debug.WriteLine($"Getting game state");
-                connection.InvokeAsync("GetGameState", localPlayerId);
-            }
-            else
-                throw new Exception();
+            connectionMessage.SendMessage("GetGameState", localPlayerId);
         }
 
         public async void MoveObject(string id, Point position)
         {
-            if (checkConnection.IsConnected(connection))
-            {
-                Debug.WriteLine($"Move send. ID: {id}, {position}");
-                connection.InvokeAsync("MoveObject", id, position);
-            }
-            else
-                throw new Exception();
+            connectionMessage.SendMessage("MoveObject", id, position);
         }
 
         public async void CreateMapObjects(string[] ids, string[] mapObjectNames, Point[] positions) 
         {
-            if (checkConnection.IsConnected(connection))
-            {
-                Debug.WriteLine("Sending map objects.");
-                connection.InvokeAsync("CreateMapObjects", ids, mapObjectNames, positions);
-            }
-            else
-                throw new Exception();
+            connectionMessage.SendMessage("CreateMapObjects", ids, mapObjectNames, positions);
         }
     }
 }
