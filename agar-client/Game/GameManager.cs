@@ -51,18 +51,25 @@ namespace agar_client
 
 		public void CreateFoodObjects() 
 		{
-			// AbstractFactory foodFactory = new FoodFactory();
-			// foodFactory.createMapObjects();
-			// food = FoodFactory.Instance.food;
-
-			var redFood = new RedFood();
+			AbstractFactory foodFactory = new FoodFactory();
+			foodFactory.createMapObjects();
+			food = FoodFactory.Instance.food;
 
 			// TO SHOW HOW CLONE WORKS
-			var copy = redFood.Clone();
-			GraphicsDrawer.MoveShape(copy.Shape, new Utils.Point(150, 10));
-			GraphicsDrawer.MoveShape(redFood.Shape, new Utils.Point(200, 10));
 
-			Food bigGreenFood = new BigFoodDecorator(new GreenFood());
+			// var redFood = new RedFood();
+			// var copy = redFood.Clone();
+			// GraphicsDrawer.MoveShape(copy.Shape, new Utils.Point(150, 10));
+			// GraphicsDrawer.MoveShape(redFood.Shape, new Utils.Point(200, 10));
+
+
+			// TO SHOW HOW DECORATOR WORKS
+
+			// Food bigGreenFood = new BigFoodDecorator(new GreenFoodDecorator());
+			// Food bigRedFood = new BigFoodDecorator(new RedFoodDecorator());
+
+			// Food smallGreenFood = new SmallFoodDecorator(new GreenFoodDecorator());
+			// Food smallRedFood = new SmallFoodDecorator(new RedFoodDecorator());
 
 		}
 
@@ -97,10 +104,10 @@ namespace agar_client
 				switch (mapObjectNames[i])
 				{
 					case "GreenFood":
-						food.Add(new GreenFood(ids[i], mapObjectNames[i], positions[i]));
+						food.Add(new BigFoodDecorator(new GreenFoodDecorator(ids[i], mapObjectNames[i], positions[i])));
 						break;
 					case "RedFood":
-						food.Add(new RedFood(ids[i], mapObjectNames[i], positions[i]));
+						food.Add( new SmallFoodDecorator(new RedFoodDecorator(ids[i], mapObjectNames[i], positions[i])));
 						break;
 					case "GreenVirus":
 						viruses.Add(new GreenVirus(ids[i], mapObjectNames[i], positions[i]));
