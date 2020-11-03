@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 using static agar_client.Game.Utils;
 
 namespace agar_client.Game.Objects
 {
-    class GreenFood : Food
+    class RedFoodDecorator : Food
     {
-        public GreenFood() : base()
+        public RedFoodDecorator()
         {
+            this.setColor();
         }
 
-        public GreenFood(string id, string name, Point position) : base(id, position)
+        public RedFoodDecorator(string id, string name, Point position) : base(id, position)
         {
+            this.setColor();
             Name = name;
+        }
+
+        public void setColor() {
+            this.color = System.Windows.Media.Color.FromRgb(255, 0, 0);
+            this.Shape.Fill = new SolidColorBrush(color);
+            this.Name = "RedFood";
         }
 
         public override void CreateMapObject(Point? position)
         {
-            size = 10;
-            color = System.Windows.Media.Color.FromRgb(0, 255, 0);
-            Name = "GreenFood";
-
             var r = GameManager.Random;
             if (!position.HasValue)
                 position = new System.Windows.Point(r.Next(0, 700), r.Next(0, 500));

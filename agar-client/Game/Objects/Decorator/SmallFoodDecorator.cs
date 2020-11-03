@@ -12,10 +12,10 @@ namespace agar_client.Game.Objects
             this.setSize();
         }
 
-        private void setSize()
+        public void setSize()
         {
-            this.size = 5;
-            GraphicsDrawer.MoveShape(this.Shape, this.Position);
+            decoratedFood.Shape.Width = 10;
+            decoratedFood.Shape.Height = 10;
         }
     }
 }
