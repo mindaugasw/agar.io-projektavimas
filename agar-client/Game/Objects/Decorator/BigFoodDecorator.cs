@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 
 namespace agar_client.Game.Objects
 {
@@ -14,11 +15,8 @@ namespace agar_client.Game.Objects
 
         public void setSize()
         {
-            GraphicsDrawer.RemoveShape(this.Shape);
-            this.size = 30;
-
-            Shape = GraphicsDrawer.CreateNewEllipse(size, color, Position);
-            Logger.Log(color);
+            decoratedFood.Shape.Width = 17;
+            decoratedFood.Shape.Height = 17;
         }
     }
 }

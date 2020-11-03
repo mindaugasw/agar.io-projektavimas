@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using agar_server.Game;
 
 namespace agar_server
@@ -23,9 +24,13 @@ namespace agar_server
 				{
 					webBuilder.UseStartup<Startup>();
 
-					if (ConfigManager.Get<bool>("useCustomUrl"))
+					bool useCustomUrl = ConfigManager.Get<bool>("useCustomUrl");
+					Debug.WriteLine("Use custom url? : " + useCustomUrl.ToString());
+					if (useCustomUrl)
 					{
-						webBuilder.UseUrls(ConfigManager.Get<string>("customUrl"));
+						string url = ConfigManager.Get<string>("customUrl");
+						Debug.WriteLine("Url : " + useCustomUrl.ToString());
+						webBuilder.UseUrls(url);
 					}
 				});
 	}

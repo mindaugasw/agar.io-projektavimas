@@ -24,13 +24,15 @@ namespace agar_client.Game.Objects
             var gCount = r.Next(0, 21);
             var rCount = 20 - gCount;
 
-            for (int i = 0; i < gCount; i++)
+            for (int i = 0; i <= gCount; i += 2)
             {
-                food.Add(new GreenFood());
+                food.Add(new BigFoodDecorator(new GreenFoodDecorator()));
+                food.Add(new SmallFoodDecorator(new GreenFoodDecorator()));
             }
-            for (int i = 0; i < rCount; i++)
+            for (int i = 0; i <= rCount; i += 2)
             {
-                food.Add(new RedFood());
+                food.Add(new BigFoodDecorator(new RedFoodDecorator()));
+                food.Add(new SmallFoodDecorator(new RedFoodDecorator()));
             }
         }
     }
