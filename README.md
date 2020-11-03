@@ -7,7 +7,7 @@
 ```bash
 cd agar-server
 dotnet restore
-cp config.xml _config.local.xml
+cp config.xml config.local.xml
 ```
 Edit configuration in *config.local.xml* (optional).
 
@@ -16,7 +16,7 @@ Edit configuration in *config.local.xml* (optional).
 ```bash
 cd agar-client
 dotnet restore
-cp config.xml _config.local.xml
+cp config.xml config.local.xml
 ```
 Edit configuration in *config.local.xml* (optional).
 
