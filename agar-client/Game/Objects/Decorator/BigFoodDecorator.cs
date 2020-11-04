@@ -18,5 +18,8 @@ namespace agar_client.Game.Objects
             decoratedFood.Shape.Width = 17;
             decoratedFood.Shape.Height = 17;
         }
+        public Food getFood() {
+            return decoratedFood;
+        }
     }
 }
