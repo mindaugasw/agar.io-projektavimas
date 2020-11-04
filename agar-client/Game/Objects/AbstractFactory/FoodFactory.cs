@@ -26,13 +26,13 @@ namespace agar_client.Game.Objects
 
             for (int i = 0; i <= gCount; i += 2)
             {
-                food.Add(new BigFoodDecorator(new GreenFoodDecorator()));
-                food.Add(new SmallFoodDecorator(new GreenFoodDecorator()));
+                food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
+                food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
             }
             for (int i = 0; i <= rCount; i += 2)
             {
-                food.Add(new BigFoodDecorator(new RedFoodDecorator()));
-                food.Add(new SmallFoodDecorator(new RedFoodDecorator()));
+                food.Add(new BigFoodDecorator(new RedFoodDecorator()).getFood());
+                food.Add(new SmallFoodDecorator(new RedFoodDecorator()).getFood());
             }
         }
 
