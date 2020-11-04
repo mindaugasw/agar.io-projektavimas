@@ -18,15 +18,15 @@ namespace agar_client.Game.Objects
             decoratedFood.Shape.Height = 10;
         }
 
-<<<<<<< HEAD
+
         public override void FoodLogMessage()
         {
             Logger.Log("Small Food Decorator");
-=======
+        }
+
         public Food getFood()
         {
             return decoratedFood;
->>>>>>> bf45dea72a3f6d6bf62c4579d9f8061f6fcecc27
         }
     }
 }
