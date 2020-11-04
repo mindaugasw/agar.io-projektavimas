@@ -21,5 +21,7 @@ namespace agar_client.Game.Objects.Factory
         public override void CreateMapObject(Point? position)
         {
         }
+
+        public abstract void PoisonLogMessage();
     }
 }

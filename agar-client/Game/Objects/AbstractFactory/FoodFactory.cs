@@ -35,5 +35,10 @@ namespace agar_client.Game.Objects
                 food.Add(new SmallFoodDecorator(new RedFoodDecorator()));
             }
         }
+
+        //public void MessageToLog()
+        //{
+        //    Logger.Log("FoodFactory");
+        //}
     }
 }

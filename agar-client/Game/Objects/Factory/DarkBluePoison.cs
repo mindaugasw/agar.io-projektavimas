@@ -28,5 +28,10 @@ namespace agar_client.Game.Objects.Factory
             Position = position.Value;
             Shape = GraphicsDrawer.CreateNewEllipse(size, color, Position);
         }
+
+        public override void PoisonLogMessage()
+        {
+            Logger.Log("Dark Blue Poison");
+        }
     }
 }

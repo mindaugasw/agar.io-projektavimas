@@ -31,5 +31,6 @@ namespace agar_client.Game.Objects
             return (Food) copy;
         }
 
+        public abstract void FoodLogMessage();
     }
 }

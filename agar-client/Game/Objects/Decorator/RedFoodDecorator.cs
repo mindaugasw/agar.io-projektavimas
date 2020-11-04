@@ -33,5 +33,10 @@ namespace agar_client.Game.Objects
             Position = position.Value;
             Shape = GraphicsDrawer.CreateNewEllipse(size, color, Position);
         }
+
+        public override void FoodLogMessage()
+        {
+            Logger.Log("Red Food Decorator");
+        }
     }
 }

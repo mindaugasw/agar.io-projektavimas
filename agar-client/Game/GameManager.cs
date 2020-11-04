@@ -1,5 +1,7 @@
 ﻿using agar_client.Game;
 using agar_client.Game.Objects;
+using agar_client.Game.Objects.Adapter;
+using agar_client.Game.Objects.Bridge;
 using agar_client.Game.Objects.Builder;
 using agar_client.Game.Objects.Factory;
 using System;
@@ -75,17 +77,41 @@ namespace agar_client
 
 		public void CreateVirusObjects() 
 		{
-			AbstractFactory virusFactory = new VirusFactory();
-			virusFactory.createMapObjects();
-			viruses = VirusFactory.Instance.viruses;
-		}
+            AbstractFactory virusFactory = new VirusFactory();
+            virusFactory.createMapObjects();
+            viruses = VirusFactory.Instance.viruses;
+
+
+            // TO SHOW HOW BRIDGE WORKS
+            //Damage redVirus = new QuickDamageAction(new RedVirus());
+            //Logger.Log("Red Virus:");
+            //redVirus.InflictDamage();
+
+            //Damage greenVirus = new QuickDamageAction(new GreenVirus());
+            //Logger.Log("Green Virus:");
+            //greenVirus.InflictDamage();
+
+
+            //Damage redVirus2 = new SlowDamageAction(new RedVirus());
+            //Logger.Log("Red Virus:");
+            //redVirus2.InflictDamage();
+
+            //Damage greenVirus2 = new SlowDamageAction(new GreenVirus());
+            //Logger.Log("Green Virus:");
+            //greenVirus2.InflictDamage();
+        }
 
 		public void CreatePoisonObjects()
 		{
-			PoisonFactory poisonFactory = new PoisonFactory();
-			poisonFactory.createPoisonObjects();
-			poison = PoisonFactory.Instance.poison;
-		}
+            PoisonFactory poisonFactory = new PoisonFactory();
+            poisonFactory.createPoisonObjects();
+            poison = PoisonFactory.Instance.poison;
+
+            // TO SHOW HOW ADAPTER WORKS
+            //BluePoison bluePoison = new BluePoison();
+            //Food poisonAdapter = new BluePoisonAdapter(bluePoison);
+            //poisonAdapter.FoodLogMessage();
+        }
 
 		public void SendMapObjects() 
 		{

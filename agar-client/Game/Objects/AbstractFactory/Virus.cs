@@ -20,5 +20,7 @@ namespace agar_client.Game.Objects
         public override void CreateMapObject(Point? position)
         {
         }
+
+
     }
 }
