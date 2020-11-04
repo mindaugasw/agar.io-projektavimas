@@ -14,7 +14,22 @@ namespace agar_client.Game.Objects
 
 		public Player() : base()
 		{
-			strategy = new NormalStrategy();
+			var r = GameManager.Random;
+			int c = r.Next(0, 100);
+			if (c < 50) {
+				Logger.Log("NormalStrategy");
+				strategy = new NormalStrategy();
+			}
+			else if (c > 50 && c < 75) {
+				Logger.Log("BoostStrategy");
+				strategy = new BoostStrategy();
+			}
+			else if (c > 75 && c < 100)
+			{
+				Logger.Log("PoisonedStrategy");
+				strategy = new PoisonedStrategy();
+			}
+
 		}
 		public Player(string id, Point position) : base(id, position)
 		{

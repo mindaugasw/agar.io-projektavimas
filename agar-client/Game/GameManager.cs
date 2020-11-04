@@ -104,7 +104,7 @@ namespace agar_client
 		public void CreatePoisonObjects()
 		{
             PoisonFactory poisonFactory = new PoisonFactory();
-            poisonFactory.createPoisonObjects(new Dictionary<string, int> { { "BluePoison", 1}, { "CyanPoison", 2}, {"DarkBluePoison", 1} });
+            poisonFactory.createPoisonObjects(new Dictionary<string, int> { { "BluePoison", 1}, { "CyanPoison", 1}, {"DarkBluePoison", 1} });
             poison = PoisonFactory.Instance.poison;
 
             // TO SHOW HOW ADAPTER WORKS
