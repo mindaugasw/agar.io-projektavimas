@@ -54,7 +54,7 @@ namespace agar_client
 		public void CreateFoodObjects() 
 		{
 			AbstractFactory foodFactory = new FoodFactory();
-			foodFactory.createMapObjects();
+			foodFactory.createMapObjects(null);
 			food = FoodFactory.Instance.food;
 
 			// TO SHOW HOW CLONE WORKS
@@ -78,7 +78,7 @@ namespace agar_client
 		public void CreateVirusObjects() 
 		{
             AbstractFactory virusFactory = new VirusFactory();
-            virusFactory.createMapObjects();
+            virusFactory.createMapObjects(null);
             viruses = VirusFactory.Instance.viruses;
 
 
@@ -104,7 +104,7 @@ namespace agar_client
 		public void CreatePoisonObjects()
 		{
             PoisonFactory poisonFactory = new PoisonFactory();
-            poisonFactory.createPoisonObjects();
+            poisonFactory.createPoisonObjects(new Dictionary<string, int> { { "BluePoison", 1}, { "CyanPoison", 2}, {"DarkBluePoison", 1} });
             poison = PoisonFactory.Instance.poison;
 
             // TO SHOW HOW ADAPTER WORKS

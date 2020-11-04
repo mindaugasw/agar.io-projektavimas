@@ -18,27 +18,38 @@ namespace agar_client.Game.Objects
                 throw new Exception();
         }
 
-        public override void createMapObjects()
+        public override void createMapObjects(Dictionary<string, int> objNames)
         {
-            var r = GameManager.Random;
-            var gCount = r.Next(0, 21);
-            var rCount = 20 - gCount;
+            if (objNames == null) {
+                var r = GameManager.Random;
+                var gCount = r.Next(0, 21);
+                var rCount = 20 - gCount;
 
-            for (int i = 0; i <= gCount; i += 2)
-            {
-                food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
-                food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                for (int i = 0; i <= gCount; i += 2)
+                {
+                    food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
+                    food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                }
+                for (int i = 0; i <= rCount; i += 2)
+                {
+                    food.Add(new BigFoodDecorator(new RedFoodDecorator()).getFood());
+                    food.Add(new SmallFoodDecorator(new RedFoodDecorator()).getFood());
+                }
             }
-            for (int i = 0; i <= rCount; i += 2)
+            else
             {
-                food.Add(new BigFoodDecorator(new RedFoodDecorator()).getFood());
-                food.Add(new SmallFoodDecorator(new RedFoodDecorator()).getFood());
+                for (int i = 0; i < objNames["GreenFood"]; i += 2)
+                {
+                    food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
+                    food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                }
+                for (int i = 0; i < objNames["RedFood"]; i += 2)
+                {
+                    food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
+                    food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                }
             }
+
         }
-
-        //public void MessageToLog()
-        //{
-        //    Logger.Log("FoodFactory");
-        //}
     }
 }

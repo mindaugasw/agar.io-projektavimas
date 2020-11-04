@@ -17,11 +17,29 @@ namespace agar_client.Game.Objects.Factory
                 throw new Exception();
         }
 
-        public void createPoisonObjects()
+        public void createPoisonObjects(Dictionary<string, int> objNames)
         {
-            poison.Add(new BluePoison());
-            poison.Add(new CyanPoison());
-            poison.Add(new DarkBluePoison());
+            if (objNames == null)
+            {
+                poison.Add(new BluePoison());
+                poison.Add(new CyanPoison());
+                poison.Add(new DarkBluePoison());
+            }
+            else
+            {
+                for (int i = 0; i < objNames["BluePoison"]; i++)
+                {
+                    poison.Add(new BluePoison());
+                }
+                for (int i = 0; i < objNames["CyanPoison"]; i++)
+                {
+                    poison.Add(new CyanPoison());
+                }
+                for (int i = 0; i < objNames["DarkBluePoison"]; i++)
+                {
+                    poison.Add(new DarkBluePoison());
+                }
+            }
         }
     }
 }

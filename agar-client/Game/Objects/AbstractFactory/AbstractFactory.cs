@@ -6,6 +6,6 @@ namespace agar_client.Game.Objects
 {
     abstract class AbstractFactory
     {
-        public abstract void createMapObjects();
+        public abstract void createMapObjects(Dictionary<string, int> objNames);
     }
 }

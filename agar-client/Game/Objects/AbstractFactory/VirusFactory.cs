@@ -16,19 +16,33 @@ namespace agar_client.Game.Objects
             else
                 throw new Exception();
         }
-        public override void createMapObjects()
+        public override void createMapObjects(Dictionary<string, int> objNames)
         {
-            var r = GameManager.Random;
-            var gCount = r.Next(0, 5);
-            var rCount = 4 - gCount;
+            if (objNames == null)
+            {
+                var r = GameManager.Random;
+                var gCount = r.Next(0, 5);
+                var rCount = 4 - gCount;
 
-            for (int i = 0; i < gCount; i++)
-            {
-                viruses.Add(new GreenVirus());
+                for (int i = 0; i < gCount; i++)
+                {
+                    viruses.Add(new GreenVirus());
+                }
+                for (int i = 0; i < rCount; i++)
+                {
+                    viruses.Add(new RedVirus());
+                }
             }
-            for (int i = 0; i < rCount; i++)
+            else
             {
-                viruses.Add(new RedVirus());
+                for (int i = 0; i < objNames["GreenVirus"]; i++)
+                {
+                    viruses.Add(new GreenVirus());
+                }
+                for (int i = 0; i < objNames["RedVirus"]; i++)
+                {
+                    viruses.Add(new RedVirus());
+                }
             }
         }
     }
