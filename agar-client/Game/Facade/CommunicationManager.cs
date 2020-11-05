@@ -35,7 +35,10 @@ namespace agar_client
                 lock(threadLock)
 				{
                     if (instance == null)
+                    {
                         instance = new CommunicationManager();
+                        Logger.Log("CommunicationManager successfully created using Singleton.");
+                    }
 				}
                 return instance;
 			}
