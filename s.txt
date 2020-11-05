@@ -1,3 +1,0 @@
-prototype, decorator, facade
-
-TODO: Patikrinti Decorator GreenFood, kada issikviecia tas mapobject
