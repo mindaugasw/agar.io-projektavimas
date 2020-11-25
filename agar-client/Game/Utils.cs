@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace agar_client.Game
 {
-	static class Utils
+	public static class Utils
 	{
 		public static string RandomString(int length)
 		{

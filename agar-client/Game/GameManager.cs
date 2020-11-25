@@ -13,11 +13,13 @@ using static agar_client.Game.Utils;
 
 namespace agar_client
 {
-	class GameManager
+	public class GameManager
 	{
 		public static GameManager Instance;
 
 		public static Random Random;
+
+		public static bool IsTestEnvironment = false;
 
 		LocalPlayer LocalPlayer;
 		Dictionary<string, Player> players = new Dictionary<string, Player>();
@@ -26,8 +28,10 @@ namespace agar_client
 		List<Virus> viruses = new List<Virus>();
 		List<Poison> poison = new List<Poison>();
 
-		public GameManager()
+		public GameManager(bool testEnv = false)
 		{
+			IsTestEnvironment = testEnv;
+
 			if (Instance == null)
 				Instance = this;
 			else
@@ -49,6 +53,26 @@ namespace agar_client
 			var director = new Director(concreteBuilder);
 			director.Construct();
 			LocalPlayer = (LocalPlayer)concreteBuilder.GetResult();
+
+			/*if (Instance == null) // Attempted fix to run all tests at once. Still not working.
+			{
+				Instance = this;
+				Random = new Random();
+
+				//new CommunicationManager(); // Changed to Singleton-instatiation
+				new InputHandler();
+				new GraphicsDrawer();
+
+				Logger.Log("All services initialized");
+
+				//LocalPlayer = new LocalPlayer();
+
+				// Design pattern #6.1 Builder
+				var concreteBuilder = new LocalPlayerBuilder();
+				var director = new Director(concreteBuilder);
+				director.Construct();
+				LocalPlayer = (LocalPlayer)concreteBuilder.GetResult();
+			}*/
 		}
 
 		public void CreateFoodObjects() 

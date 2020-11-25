@@ -11,7 +11,7 @@ using static agar_client.Game.Utils;
 
 namespace agar_client
 {
-	class CommunicationManager
+	public class CommunicationManager
 	{
         // FIELDS
         public readonly string SERVER_URL;

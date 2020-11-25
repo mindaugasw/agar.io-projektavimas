@@ -1,5 +1,0 @@
-<!-- SERVER CONFIG -->
-<config>
-	<add key="useCustomUrl" value="false" />
-	<add key="customUrl" value="http://localhost:3000/" />
-</config>

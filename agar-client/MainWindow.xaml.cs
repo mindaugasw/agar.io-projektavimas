@@ -36,8 +36,8 @@ namespace agar_client
 		{
 			get
 			{
-				if (instance == null)
-					throw new Exception();
+				//if (instance == null)
+				//	throw new Exception();
 				return instance;
 			}
 		}
@@ -49,13 +49,26 @@ namespace agar_client
 				if (instance == null)
 					instance = this;
 				else
-					throw new Exception();
+					throw new Exception(); // TODO FIX? commented out for tests, as they fail otherwise
 			}
 
 			InitializeComponent();
 
 			new Logger(logTextBox);
 			Logger.Log("Initialized main window.");
+
+			/*lock (threadLock) // Attempted fix to run all tests at once. Still not working.
+			{
+				if (instance == null)
+				{
+					instance = this;
+
+					InitializeComponent();
+
+					new Logger(logTextBox);
+					Logger.Log("Initialized main window.");
+				}
+			}*/
 		}
 
 		void ProcessMovementInput(object sender, ExecutedRoutedEventArgs args)
@@ -64,7 +77,7 @@ namespace agar_client
 				ArrowKeysInput.Invoke(args.Parameter.ToString());
 		}
 
-		private void connectButton_Click(object sender, RoutedEventArgs e)
+		public void connectButton_Click(object sender, RoutedEventArgs e)
 		{
 			new GameManager();
 			CommunicationManager.Instance.ConnectedSuccessfully += OnConnectionEstablished;

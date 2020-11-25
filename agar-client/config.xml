@@ -1,4 +1,0 @@
-<!-- CLIENT CONFIG -->
-<config>
-	<add key="serverUrl" value="https://localhost:44372" />
-</config>

@@ -30,7 +30,8 @@ namespace agar_server.Game
 		{
 			configDict = new Dictionary<string, string>();
 
-			var dir = Directory.GetCurrentDirectory();
+			//var dir = Directory.GetCurrentDirectory();
+			var dir = Path.Combine(Directory.GetCurrentDirectory(), "..");
 			var mainConfigFile = Path.Combine(dir, "config.xml");
 			var localConfigFile = Path.Combine(dir, "config.local.xml");
 

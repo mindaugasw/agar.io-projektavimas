@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace agar_client.Game
 {
-	class ConfigManager
+	public class ConfigManager
 	{
 		static Dictionary<string, string> configDict;
 		static bool initialized = false;
@@ -20,7 +20,7 @@ namespace agar_client.Game
 				Initialize();
 
 			if (!configDict.ContainsKey(key))
-				throw new Exception("Key does not exist.");
+				throw new Exception($"Key does not exist: {key}");
 
 			return (T)Convert.ChangeType(configDict[key], typeof(T));
 		}
@@ -29,7 +29,7 @@ namespace agar_client.Game
 		{
 			configDict = new Dictionary<string, string>();
 
-			var dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+			var dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
 			var mainConfigFile = Path.Combine(dir, "config.xml");
 			var localConfigFile = Path.Combine(dir, "config.local.xml");
 

@@ -12,7 +12,7 @@ using agar_client.Game;
 
 namespace agar_client
 {
-	class GraphicsDrawer
+	public class GraphicsDrawer
 	{
 		public static GraphicsDrawer Instance;
 		Canvas GameCanvas;

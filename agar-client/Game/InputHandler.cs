@@ -7,7 +7,7 @@ using static agar_client.Game.Utils;
 
 namespace agar_client
 {
-	class InputHandler
+	public class InputHandler
 	{
 		// Input handling:
 		// https://stackoverflow.com/questions/20794918/wpf-how-to-use-command-input-bindings

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "agar-client", "agar-client\agar-client.csproj", "{191B4261-5072-4B9C-B1E5-EF635FDE82AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agar-client.Tests", "agar-client.Tests\agar-client.Tests.csproj", "{194E256B-FC76-4674-AB42-313C281C22C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "agar-client.Tests", "agar-client.Tests\agar-client.Tests.csproj", "{FBDFEF93-C7E2-4120-AAAC-85DFCF5B9BE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{191B4261-5072-4B9C-B1E5-EF635FDE82AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191B4261-5072-4B9C-B1E5-EF635FDE82AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191B4261-5072-4B9C-B1E5-EF635FDE82AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{194E256B-FC76-4674-AB42-313C281C22C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{194E256B-FC76-4674-AB42-313C281C22C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{194E256B-FC76-4674-AB42-313C281C22C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{194E256B-FC76-4674-AB42-313C281C22C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBDFEF93-C7E2-4120-AAAC-85DFCF5B9BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBDFEF93-C7E2-4120-AAAC-85DFCF5B9BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBDFEF93-C7E2-4120-AAAC-85DFCF5B9BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBDFEF93-C7E2-4120-AAAC-85DFCF5B9BE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -24,11 +24,11 @@ namespace agar_server
 				{
 					webBuilder.UseStartup<Startup>();
 
-					bool useCustomUrl = ConfigManager.Get<bool>("useCustomUrl");
+					bool useCustomUrl = ConfigManager.Get<bool>("useCustomServerUrl");
 					Debug.WriteLine("Use custom url? : " + useCustomUrl.ToString());
 					if (useCustomUrl)
 					{
-						string url = ConfigManager.Get<string>("customUrl");
+						string url = ConfigManager.Get<string>("serverUrl");
 						Debug.WriteLine("Url : " + useCustomUrl.ToString());
 						webBuilder.UseUrls(url);
 					}
