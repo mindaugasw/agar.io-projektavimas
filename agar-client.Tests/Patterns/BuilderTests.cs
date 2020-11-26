@@ -6,7 +6,7 @@ using agar_client.Game.Objects.Builder;
 using agar_client.Game.Objects;
 
 //[assembly: CollectionBehavior(DisableTestParallelization = true)]
-namespace agar_client.Tests
+namespace agar_client.Tests.Patterns
 {
 	//[collection: CollectionDefinition(DisableParallelization = true)] // Hangs up second test
 	public class BuilderTests : IDisposable

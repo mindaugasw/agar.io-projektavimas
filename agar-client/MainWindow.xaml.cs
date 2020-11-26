@@ -71,11 +71,19 @@ namespace agar_client
 			}*/
 		}
 
-		void ProcessMovementInput(object sender, ExecutedRoutedEventArgs args)
+		public void ProcessMovementInput(object sender, ExecutedRoutedEventArgs args)
+		{
+			InvokeArrowKeysEvent(sender, args.Parameter.ToString());
+			//if (ArrowKeysInput != null)
+			//	ArrowKeysInput.Invoke(args.Parameter.ToString());
+		}
+		
+		public void InvokeArrowKeysEvent(object sender, string direction)
 		{
 			if (ArrowKeysInput != null)
-				ArrowKeysInput.Invoke(args.Parameter.ToString());
+				ArrowKeysInput.Invoke(direction);
 		}
+
 
 		public void connectButton_Click(object sender, RoutedEventArgs e)
 		{
