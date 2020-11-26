@@ -4,7 +4,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects.Builder
 {
-	class Director
+	public class Director
 	{
 		private IPlayerBuilder playerBuilder;
 

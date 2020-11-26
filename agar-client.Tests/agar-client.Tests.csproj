@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -19,5 +19,11 @@
   <ItemGroup>
     <ProjectReference Include="..\agar-client\agar-client.csproj" />
   </ItemGroup>
+
+  <!-- <ItemGroup> // Unit tests no-parralelism. Did not work.
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>-->
 
 </Project>

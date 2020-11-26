@@ -4,7 +4,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects.Builder
 {
-	interface IPlayerBuilder
+	public interface IPlayerBuilder
 	{
 		public void BuildPlayer();
 

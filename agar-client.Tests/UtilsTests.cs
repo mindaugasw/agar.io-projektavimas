@@ -31,9 +31,24 @@ namespace agar_client.Tests
 		}
 
 		[StaFact]
-		public void PointTest()
+		public void PointMathTest()
 		{
-			TestsHelper.LogModule("UtilsTests", "PointTest");
+			// TODO
+
+			Assert.True(false);
+		}
+
+		[StaFact]
+		public void PointConversionTest()
+		{
+			// TODO
+
+			Assert.True(false);
+		}
+
+		[StaFact]
+		public void PointEqualityTest()
+		{
 			// TODO
 
 			Assert.True(false);

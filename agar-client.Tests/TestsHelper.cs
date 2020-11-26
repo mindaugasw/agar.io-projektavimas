@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Windows;
 using agar_client;
 using agar_client.Game;
 
@@ -67,6 +68,12 @@ namespace agar_client.Tests
 
 			//if (mw != null)
 			//	mw.Close();
+
+			//MainWindow.Instance.Dispatcher.Invoke(() => { // Hangs up second test
+				//MainWindow.Instance.Close();
+				//Environment.Exit(0);
+				
+			//});
 
 		}
 

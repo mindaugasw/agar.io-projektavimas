@@ -7,18 +7,19 @@ namespace agar_client.Game.Objects
 	/// <summary>
 	/// Represents player on this machine
 	/// </summary>
-	class LocalPlayer : Player
+	public class LocalPlayer : Player
 	{
 		public static LocalPlayer Instance;
 
 		public LocalPlayer() : base()
 		{
 			if (Instance == null)
+			{
 				Instance = this;
-			else
+				CommunicationManager.Instance.AnnounceNewPlayer(Id, Position);
+			}
+			else if (!GameManager.IsTestEnvironment)
 				throw new Exception();
-
-			CommunicationManager.Instance.AnnounceNewPlayer(Id, Position);
 		}
 	}
 }

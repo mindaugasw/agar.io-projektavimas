@@ -7,7 +7,7 @@ using System.Windows.Shapes;
 namespace agar_client.Game.Objects.Builder
 {
 	// Concrete builder #1
-	class LocalPlayerBuilder : IPlayerBuilder
+	public class LocalPlayerBuilder : IPlayerBuilder
 	{
 		private LocalPlayer player;
 

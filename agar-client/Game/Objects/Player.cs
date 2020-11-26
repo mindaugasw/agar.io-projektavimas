@@ -5,7 +5,7 @@ using static agar_client.Game.Utils;
 
 namespace agar_client.Game.Objects
 {
-	class Player : MapObject
+	public class Player : MapObject
 	{
 
 		//public int PLAYER_MOVE_SPEED = 35; // units per button press

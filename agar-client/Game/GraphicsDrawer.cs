@@ -15,14 +15,19 @@ namespace agar_client
 	public class GraphicsDrawer
 	{
 		public static GraphicsDrawer Instance;
+		static object lockObj = new object();
+
 		Canvas GameCanvas;
 
 		public GraphicsDrawer()
 		{
-			if (Instance == null)
-				Instance = this;
-			else
-				throw new Exception();
+			lock (lockObj)
+			{
+				if (Instance == null)
+					Instance = this;
+				else
+					throw new Exception();
+			}
 
 			GameCanvas = MainWindow.Instance.gameCanvas;
 		}
@@ -31,15 +36,17 @@ namespace agar_client
 
 		public static Ellipse CreateNewEllipse(int size, System.Windows.Media.Color color, Utils.Point position)
 		{
-			Ellipse e = new Ellipse();
-			Instance.GameCanvas.Children.Add(e);
-			e.Width = size;
-			e.Height = size;
-			e.Fill = new SolidColorBrush(color);
-			e.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
-			e.StrokeThickness = 2;
-			MoveShape(e, position);
-			return e;
+			//return MainWindow.Instance.Dispatcher.Invoke(() => { // Unit tests attempted fix (did not work)
+				Ellipse e = new Ellipse();
+				Instance.GameCanvas.Children.Add(e);
+				e.Width = size;
+				e.Height = size;
+				e.Fill = new SolidColorBrush(color);
+				e.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
+				e.StrokeThickness = 2;
+				MoveShape(e, position);
+				return e;
+			//});
 		}
 
 		public static Polygon CreateNewVirus(int size, System.Windows.Media.Color color, Utils.Point position)
