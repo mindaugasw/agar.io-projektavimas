@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Windows;
 using agar_client;
 using agar_client.Game;
 
@@ -19,6 +20,7 @@ namespace agar_client.Tests
 		public static CommunicationManager cm;
 
 		static StreamWriter logFile;
+		// Set to true to enable logging to file (unstable)
 		static bool loggingEnabled = false;
 
 		public static void InitializeServices()
@@ -68,17 +70,27 @@ namespace agar_client.Tests
 			//if (mw != null)
 			//	mw.Close();
 
+			//MainWindow.Instance.Dispatcher.Invoke(() => { // Hangs up second test
+				//MainWindow.Instance.Close();
+				//Environment.Exit(0);
+				
+			//});
+
 		}
 
-		// Logging
+		// Log with timestamp and module name included
 		public static void LogModule(string module, object content)
 		{
 			LogTime($"{module}: {content.ToString()}");
 		}
+		
+		// Log with timestamp included
 		public static void LogTime(object content)
 		{
 			Log($"\n{DateTime.Now.ToString("HH:mm:ss")}: {content.ToString()}");
 		}
+
+		// Log to console and to file, is flag is set to true
 		public static void Log(object content)
 		{
 			Debug.Write(content);
@@ -89,12 +101,6 @@ namespace agar_client.Tests
 
 				logFile.Write(content);
 			}
-				
-			//using (System.IO.StreamWriter file =
-			//	new System.IO.StreamWriter("../../../../log.client.tests.txt", true))
-			//{
-			//	file.Write(content);
-			//}
 		}
 	}
 }

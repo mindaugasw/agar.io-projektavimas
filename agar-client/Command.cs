@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace agar_client
 {
-	class Command
+	public class Command
 	{
 		public static RoutedCommand Player_move = new RoutedCommand();
 	}

@@ -6,7 +6,7 @@ using static agar_client.Game.Utils;
 namespace agar_client.Game.Objects.Builder
 {
 	// Concrete builder #2
-	class OtherPlayerBuilder : IPlayerBuilder
+	public class OtherPlayerBuilder : IPlayerBuilder
 	{
 		private Player player;
 

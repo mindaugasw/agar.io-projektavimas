@@ -81,7 +81,7 @@ namespace agar_client.Game
 			/// </summary>
 			public static Point operator /(Point a, Point b)
 			{
-				return new Point(a.X * b.X, a.Y * b.Y);
+				return new Point(a.X / b.X, a.Y / b.Y);
 			}
 			/// <summary>
 			/// Scalar division of each member

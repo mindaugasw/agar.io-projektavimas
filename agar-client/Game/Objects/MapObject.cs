@@ -10,7 +10,7 @@ namespace agar_client.Game.Objects
 	/// <summary>
 	/// An object that is displayed on the game map (e.g. an obstacle, player)
 	/// </summary>
-	abstract class MapObject
+	public abstract class MapObject
 	{
 		[JsonPropertyName("id")]
 		public string Id { get; set; } // Unique object indentifier across whole server
