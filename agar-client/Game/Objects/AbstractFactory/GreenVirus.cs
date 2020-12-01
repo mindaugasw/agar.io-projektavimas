@@ -5,7 +5,7 @@ using static agar_client.Game.Utils;
 
 namespace agar_client.Game.Objects
 {
-    class GreenVirus : Virus
+    public class GreenVirus : Virus
     {
         public GreenVirus() : base()
         {

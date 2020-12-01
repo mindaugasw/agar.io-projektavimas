@@ -4,7 +4,7 @@ using System.Text;
 using static agar_client.Game.Utils;
 namespace agar_client.Game.Objects
 {
-    class Virus : MapObject
+    public class Virus : MapObject
     {
         protected int size;
         protected System.Windows.Media.Color color;
@@ -21,6 +21,13 @@ namespace agar_client.Game.Objects
         {
         }
 
+        public int getSize() {
+            return size;
+        }
 
+        public System.Windows.Media.Color getColor()
+        {
+            return color;
+        }
     }
 }

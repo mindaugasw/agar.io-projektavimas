@@ -4,7 +4,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects
 {
-    abstract class AbstractFactory
+    public abstract class AbstractFactory
     {
         public abstract void createMapObjects(Dictionary<string, int> objNames);
     }

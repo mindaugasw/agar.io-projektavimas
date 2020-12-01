@@ -4,7 +4,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects
 {
-    class VirusFactory : AbstractFactory
+    public class VirusFactory : AbstractFactory
     {
         public static VirusFactory Instance;
         public List<Virus> viruses = new List<Virus>();
@@ -35,14 +35,16 @@ namespace agar_client.Game.Objects
             }
             else
             {
-                for (int i = 0; i < objNames["GreenVirus"]; i++)
-                {
-                    viruses.Add(new GreenVirus());
-                }
-                for (int i = 0; i < objNames["RedVirus"]; i++)
-                {
-                    viruses.Add(new RedVirus());
-                }
+                if (objNames.ContainsKey("GreenVirus"))
+                    for (int i = 0; i < objNames["GreenVirus"]; i++)
+                    {
+                        viruses.Add(new GreenVirus());
+                    }
+                if (objNames.ContainsKey("RedVirus"))
+                    for (int i = 0; i < objNames["RedVirus"]; i++)
+                    {
+                        viruses.Add(new RedVirus());
+                    }
             }
         }
     }

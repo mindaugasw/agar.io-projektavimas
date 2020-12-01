@@ -5,7 +5,7 @@ using static agar_client.Game.Utils;
 
 namespace agar_client.Game.Objects
 {
-    abstract class Food : MapObject
+    public abstract class Food : MapObject
     {
 
         public int size;

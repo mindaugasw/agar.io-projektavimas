@@ -27,18 +27,21 @@ namespace agar_client.Game.Objects.Factory
             }
             else
             {
-                for (int i = 0; i < objNames["BluePoison"]; i++)
-                {
-                    poison.Add(new BluePoison());
-                }
-                for (int i = 0; i < objNames["CyanPoison"]; i++)
-                {
-                    poison.Add(new CyanPoison());
-                }
-                for (int i = 0; i < objNames["DarkBluePoison"]; i++)
-                {
-                    poison.Add(new DarkBluePoison());
-                }
+                if (objNames.ContainsKey("BluePoison"))
+                    for (int i = 0; i < objNames["BluePoison"]; i++)
+                    {
+                        poison.Add(new BluePoison());
+                    }
+                if (objNames.ContainsKey("CyanPoison"))
+                    for (int i = 0; i < objNames["CyanPoison"]; i++)
+                    {
+                        poison.Add(new CyanPoison());
+                    }
+                if (objNames.ContainsKey("DarkBluePoison"))
+                    for (int i = 0; i < objNames["DarkBluePoison"]; i++)
+                    {
+                        poison.Add(new DarkBluePoison());
+                    }
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects
 {
-    class FoodFactory : AbstractFactory
+    public class FoodFactory : AbstractFactory
     {
         public static FoodFactory Instance;
         public List<Food> food = new List<Food>();
@@ -38,16 +38,18 @@ namespace agar_client.Game.Objects
             }
             else
             {
-                for (int i = 0; i < objNames["GreenFood"]; i += 2)
-                {
-                    food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
-                    food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
-                }
-                for (int i = 0; i < objNames["RedFood"]; i += 2)
-                {
-                    food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
-                    food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
-                }
+                if(objNames.ContainsKey("GreenFood"))
+                    for (int i = 0; i < objNames["GreenFood"]; i += 2)
+                    {
+                        food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
+                        food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                    }
+                if (objNames.ContainsKey("RedFood"))
+                    for (int i = 0; i < objNames["RedFood"]; i += 2)
+                    {
+                        food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
+                        food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                    }
             }
 
         }
