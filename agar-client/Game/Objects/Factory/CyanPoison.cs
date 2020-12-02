@@ -5,7 +5,7 @@ using static agar_client.Game.Utils;
 
 namespace agar_client.Game.Objects.Factory
 {
-    class CyanPoison : Poison
+    public class CyanPoison : Poison
     {
         public CyanPoison() : base()
         {

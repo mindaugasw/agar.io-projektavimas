@@ -4,7 +4,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects.Factory
 {
-    class PoisonFactory
+    public class PoisonFactory
     {
         public static PoisonFactory Instance;
         public List<Poison> poison = new List<Poison>();

@@ -5,7 +5,7 @@ using static agar_client.Game.Utils;
 
 namespace agar_client.Game.Objects.Factory
 {
-    abstract class Poison : MapObject
+    public abstract class Poison : MapObject
     {
         protected int size;
         protected System.Windows.Media.Color color;
@@ -23,5 +23,15 @@ namespace agar_client.Game.Objects.Factory
         }
 
         public abstract void PoisonLogMessage();
+
+        public int getSize()
+        {
+            return size;
+        }
+
+        public System.Windows.Media.Color getColor()
+        {
+            return color;
+        }
     }
 }
