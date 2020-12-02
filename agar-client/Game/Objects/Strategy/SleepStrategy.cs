@@ -4,7 +4,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects
 {
-    class SleepStrategy : PlayerStrategy
+    public class SleepStrategy : PlayerStrategy
     {
         public override int playerSpeed()
         {

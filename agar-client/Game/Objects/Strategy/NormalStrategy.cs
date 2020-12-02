@@ -4,7 +4,7 @@ using System.Text;
 
 namespace agar_client.Game.Objects
 {
-    class NormalStrategy : PlayerStrategy
+    public class NormalStrategy : PlayerStrategy
     {
         public override int playerSpeed()
         {

@@ -72,7 +72,7 @@ namespace agar_client.Tests.Patterns
 		}
 
 		[StaFact]
-		public void DarkBluePoison()
+		public void DarkBluePoisonTest()
 		{
 			DarkBluePoison darkBluePoison = new DarkBluePoison("id_DarkBluePoison", "DarkBluePoison", new Utils.Point(11, 127));
 			Assert.IsType<DarkBluePoison>(darkBluePoison);
