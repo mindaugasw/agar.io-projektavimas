@@ -1,4 +1,5 @@
-﻿using System;
+﻿using agar_client.Game.Objects.Iterator;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -23,6 +24,8 @@ namespace agar_client.Game.Objects
 
 		public Shape Shape;
 
+		private List<MapObject> objects = new List<MapObject>();
+
 		public MapObject()
 		{
 			Id = Utils.RandomString(16);
@@ -39,5 +42,35 @@ namespace agar_client.Game.Objects
 		}
 
 		public abstract void CreateMapObject(Point? position);
+
+		public void Add(MapObject a)
+		{
+			objects.Add(a);
+		}
+
+		public void AddRange(List<MapObject> a)
+		{
+			objects.AddRange(a);
+		}
+
+		public void Remove(MapObject a)
+		{
+			objects.Remove(a);
+		}
+
+		public int Count()
+		{
+			return objects.Count;
+		}
+
+		public List<MapObject> GetMapObjects()
+		{
+			return objects;
+		}
+
+		public IIterator GetIterator()
+		{
+			return new ListIterator(objects);
+		}
 	}
 }

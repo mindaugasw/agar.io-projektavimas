@@ -26,11 +26,15 @@ namespace agar_client.Game.Objects
 
                 for (int i = 0; i < gCount; i++)
                 {
-                    viruses.Add(new GreenVirus());
+                    var v = new GreenVirus();
+                    viruses.Add(v);
+                    Add(v);
                 }
                 for (int i = 0; i < rCount; i++)
                 {
-                    viruses.Add(new RedVirus());
+                    var v = new RedVirus();
+                    viruses.Add(v);
+                    Add(v);
                 }
             }
             else
@@ -38,12 +42,16 @@ namespace agar_client.Game.Objects
                 if (objNames.ContainsKey("GreenVirus"))
                     for (int i = 0; i < objNames["GreenVirus"]; i++)
                     {
-                        viruses.Add(new GreenVirus());
+                        var v = new GreenVirus();
+                        viruses.Add(v);
+                        Add(v);
                     }
                 if (objNames.ContainsKey("RedVirus"))
                     for (int i = 0; i < objNames["RedVirus"]; i++)
                     {
-                        viruses.Add(new RedVirus());
+                        var v = new RedVirus();
+                        viruses.Add(v);
+                        Add(v);
                     }
             }
         }

@@ -8,6 +8,7 @@ namespace agar_client.Game.Objects.Factory
     {
         public static PoisonFactory Instance;
         public List<Poison> poison = new List<Poison>();
+        public MapObject poison2;
 
         public PoisonFactory()
         {
@@ -21,28 +22,48 @@ namespace agar_client.Game.Objects.Factory
         {
             if (objNames == null)
             {
-                poison.Add(new BluePoison());
-                poison.Add(new CyanPoison());
-                poison.Add(new DarkBluePoison());
+                Poison p = new BluePoison();
+                poison.Add(p);
+                Add(p);
+                p = new CyanPoison();
+                poison.Add(p);
+                Add(p);
+                p = new DarkBluePoison();
+                poison.Add(p);
+                Add(p);
             }
             else
             {
                 if (objNames.ContainsKey("BluePoison"))
                     for (int i = 0; i < objNames["BluePoison"]; i++)
                     {
-                        poison.Add(new BluePoison());
+                        Poison p = new BluePoison();
+                        poison.Add(p);
+                        Add(p);
                     }
                 if (objNames.ContainsKey("CyanPoison"))
                     for (int i = 0; i < objNames["CyanPoison"]; i++)
                     {
-                        poison.Add(new CyanPoison());
+                        Poison p = new CyanPoison();
+                        poison.Add(p);
+                        Add(p);
                     }
                 if (objNames.ContainsKey("DarkBluePoison"))
                     for (int i = 0; i < objNames["DarkBluePoison"]; i++)
                     {
-                        poison.Add(new DarkBluePoison());
+                        Poison p = new DarkBluePoison();
+                        poison.Add(p);
+                        Add(p);
                     }
             }
+        }
+
+        public void Add(MapObject p)
+        {
+            if (poison2 == null)
+                poison2 = p;
+            else
+                poison2.Add(p);
         }
     }
 }

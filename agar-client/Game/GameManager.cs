@@ -4,6 +4,7 @@ using agar_client.Game.Objects.Adapter;
 using agar_client.Game.Objects.Bridge;
 using agar_client.Game.Objects.Builder;
 using agar_client.Game.Objects.Factory;
+using agar_client.Game.Objects.Iterator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -139,11 +140,32 @@ namespace agar_client
 
 		public void SendMapObjects() 
 		{
-			List<MapObject> mapObjects = new List<MapObject>();
-			mapObjects.AddRange(food);
-			mapObjects.AddRange(viruses);
-			mapObjects.AddRange(poison);
-			CommunicationManager.Instance.CreateMapObjects(mapObjects.Select(x => x.Id).ToArray(), mapObjects.Select(x => x.Name).ToArray(), mapObjects.Select(x => x.Position).ToArray());
+			//List<MapObject> mapObjects = new List<MapObject>();
+			//mapObjects.AddRange(food);
+			//mapObjects.AddRange(viruses);
+			//mapObjects.AddRange(poison);
+			//CommunicationManager.Instance.CreateMapObjects(mapObjects.Select(x => x.Id).ToArray(), mapObjects.Select(x => x.Name).ToArray(), mapObjects.Select(x => x.Position).ToArray());
+
+			MapObject composite1 = VirusFactory.Instance.objects;
+			MapObject composite2 = FoodFactory.Instance.objects;
+			MapObject composite3 = PoisonFactory.Instance.poison2;
+
+			composite1.AddRange(composite2.GetMapObjects());
+			composite3.AddRange(composite1.GetMapObjects());
+
+			string[] ids = new string[composite3.Count()];
+			string[] mapObjectNames = new string[composite3.Count()];
+			Point[] positions = new Point[composite3.Count()];
+			for (IIterator iter = composite3.GetIterator(); iter.HasNext();)
+            {
+				MapObject x = (MapObject) iter.Next();
+				ids[iter.Index()-1] = x.Id;
+				mapObjectNames[iter.Index() - 1] = x.Name;
+				positions[iter.Index() - 1] = x.Position;
+
+
+			}
+			CommunicationManager.Instance.CreateMapObjects(ids,mapObjectNames,positions);
 		}
 
 		public void ReceiveMapObjects(string[] ids, string[] mapObjectNames, Point[] positions)

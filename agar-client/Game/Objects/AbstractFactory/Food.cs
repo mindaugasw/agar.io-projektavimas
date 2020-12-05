@@ -32,5 +32,6 @@ namespace agar_client.Game.Objects
         }
 
         public abstract void FoodLogMessage();
+
     }
 }

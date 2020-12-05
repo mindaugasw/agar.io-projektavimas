@@ -27,13 +27,21 @@ namespace agar_client.Game.Objects
 
                 for (int i = 0; i <= gCount; i += 2)
                 {
-                    food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
-                    food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                    Food f = new BigFoodDecorator(new GreenFoodDecorator()).getFood();
+                    food.Add(f);
+                    Add(f);
+                    f = new SmallFoodDecorator(new GreenFoodDecorator()).getFood();
+                    food.Add(f);
+                    Add(f);
                 }
                 for (int i = 0; i <= rCount; i += 2)
                 {
-                    food.Add(new BigFoodDecorator(new RedFoodDecorator()).getFood());
-                    food.Add(new SmallFoodDecorator(new RedFoodDecorator()).getFood());
+                    Food f = new BigFoodDecorator(new RedFoodDecorator()).getFood();
+                    food.Add(f);
+                    Add(f);
+                    f = new SmallFoodDecorator(new RedFoodDecorator()).getFood();
+                    food.Add(f);
+                    Add(f);
                 }
             }
             else
@@ -41,14 +49,22 @@ namespace agar_client.Game.Objects
                 if(objNames.ContainsKey("GreenFood"))
                     for (int i = 0; i < objNames["GreenFood"]; i += 2)
                     {
-                        food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
-                        food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                        Food f = new BigFoodDecorator(new GreenFoodDecorator()).getFood();
+                        food.Add(f);
+                        Add(f);
+                        f = new SmallFoodDecorator(new GreenFoodDecorator()).getFood();
+                        food.Add(f);
+                        Add(f);
                     }
                 if (objNames.ContainsKey("RedFood"))
                     for (int i = 0; i < objNames["RedFood"]; i += 2)
                     {
-                        food.Add(new BigFoodDecorator(new GreenFoodDecorator()).getFood());
-                        food.Add(new SmallFoodDecorator(new GreenFoodDecorator()).getFood());
+                        Food f = new BigFoodDecorator(new RedFoodDecorator()).getFood();
+                        food.Add(f);
+                        Add(f);
+                        f = new SmallFoodDecorator(new RedFoodDecorator()).getFood();
+                        food.Add(f);
+                        Add(f);
                     }
             }
 
