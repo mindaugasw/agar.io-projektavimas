@@ -6,25 +6,30 @@ using agar_client.Game;
 using agar_client.Game.Objects;
 using agar_client.Game.Objects.Factory;
 using System.Windows.Shapes;
+using Xunit.Extensions;
+using System.Collections;
 
 namespace agar_client.Tests.Patterns
 {
-    public class FactoryTests : IDisposable
-    {
+	public class FactoryTests : IDisposable
+	{
+		PoisonFactory poisonFactory;
 		public FactoryTests()
 		{
 			TestsHelper.InitializeServices();
+			poisonFactory = new PoisonFactory();
 		}
 
 		public void Dispose()
 		{
 			TestsHelper.DisposeServices();
+			PoisonFactory.Instance = null;
 		}
 
 		[StaFact]
 		public void PoisonFactoryTest()
 		{
-			PoisonFactory poisonFactory = new PoisonFactory();
+			//PoisonFactory poisonFactory = new PoisonFactory();
 			Assert.IsType<PoisonFactory>(poisonFactory);
 			Assert.NotNull(poisonFactory.poison);
 		}
@@ -32,7 +37,7 @@ namespace agar_client.Tests.Patterns
 		[StaFact]
 		public void PoisonFactoryCreatePoison()
 		{
-			PoisonFactory poisonFactory = new PoisonFactory();
+			//PoisonFactory poisonFactory = new PoisonFactory();
 			poisonFactory.createPoisonObjects(new Dictionary<string, int> { { "BluePoison", 1 }, { "CyanPoison", 1 } });
 			Assert.Equal(2, poisonFactory.poison.Count);
 			poisonFactory.poison = new List<Poison>();
@@ -84,5 +89,31 @@ namespace agar_client.Tests.Patterns
 			Assert.Equal(2, darkBluePoison.Shape.StrokeThickness);
 			Assert.IsType<Ellipse>(darkBluePoison.Shape);
 		}
-	}
+
+		[StaTheory]
+		[ClassData(typeof(TestData))]
+		public void PoisonFactoryPoisonCount(Dictionary<string, int> poison, int count)
+		{
+            //PoisonFactory poisonFactory = new PoisonFactory();
+            //poisonFactory.createPoisonObjects(poison);
+            //Assert.Equal(count, poisonFactory.poison.Count);
+            //PoisonFactory.Instance = null;
+
+            poisonFactory.createPoisonObjects(poison);
+            Assert.Equal(count, poisonFactory.poison.Count);
+        }
+
+		class TestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+				yield return new object[] { new Dictionary<string, int> { { "BluePoison", 2 }, { "RedFood", 5 } }, 2 };
+				yield return new object[] { new Dictionary<string, int> { { "BluePoison", 1 }, { "RedFood", 1 } }, 1 };
+				yield return new object[] { new Dictionary<string, int> { { "BluePoison", 3 }, { "CyanPoison", 3 }, { "DarkBluePoison", 3 } }, 9 };
+				yield return new object[] { null, 3 };
+			}
+
+			IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+		}
+    }
 }

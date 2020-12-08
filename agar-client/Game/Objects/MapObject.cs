@@ -33,6 +33,11 @@ namespace agar_client.Game.Objects
 		}
 		public MapObject(string id, Point position)
 		{
+			if (id == null || id.Trim() == "")
+			{
+				throw new ArgumentNullException();
+			}
+
 			if (string.IsNullOrWhiteSpace(id))
 				Id = Utils.RandomString(16);
 			else

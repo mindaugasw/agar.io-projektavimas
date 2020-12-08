@@ -9,8 +9,8 @@ using System.Windows.Shapes;
 
 namespace agar_client.Tests.Patterns
 {
-    public class AbstractFactoryTests : IDisposable
-    {
+	public class AbstractFactoryTests : IDisposable
+	{
 		public AbstractFactoryTests()
 		{
 			TestsHelper.InitializeServices();
@@ -92,5 +92,25 @@ namespace agar_client.Tests.Patterns
 			Assert.Equal(2, greenVirus.Shape.StrokeThickness);
 			Assert.IsType<Polygon>(greenVirus.Shape);
 		}
+
+		[StaTheory]
+		[MemberData(nameof(Data))]
+		public void FoodFactoryFoodCount(Dictionary<string, int> food, int count)
+		{
+            FoodFactory foodFactory = new FoodFactory();
+			foodFactory.createMapObjects(food);
+            Assert.Equal(count, foodFactory.food.Count);
+			FoodFactory.Instance = null;
+        }
+
+		public static IEnumerable<object[]> Data => 
+			new List<object[]>
+			{
+				new object[] {new Dictionary<string, int> { { "GreenFood", 1 }, { "RedFood", 2 } }, 4},
+				new object[] {new Dictionary<string, int> { { "GreenFood", 0 }, { "RedFood", 3 } }, 4},
+				new object[] {new Dictionary<string, int> { { "BluePoison", 1 }, { "RedFood", 5 } }, 6},
+				new object[] {new Dictionary<string, int> { { "GreenFood", 10 }, { "RedFood", 10 } }, 20},
+				new object[] {new Dictionary<string, int> { { "GreenFood", 0 }, { "RedFood", 0 } }, 0},
+			};
 	}
 }
