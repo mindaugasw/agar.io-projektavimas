@@ -30,5 +30,11 @@ namespace agar_server.Game.Objects
 			Position = position;
 			Name = name;
 		}
+
+		public MapObject Clone()
+        {
+            var copy = (MapObject) this.MemberwiseClone();
+            return copy;
+        }
 	}
 }

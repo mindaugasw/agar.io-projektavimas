@@ -50,7 +50,8 @@ namespace agar_client
 				Instance = this;
 			else
 				throw new Exception();*/
-            SERVER_URL = ConfigManager.Get<string>("serverUrl");
+            // SERVER_URL = ConfigManager.Get<string>("serverUrl");
+            SERVER_URL = "http://localhost:3000";
 
 			connection = new HubConnectionBuilder()
 				.WithUrl(SERVER_URL+"/gamehub")

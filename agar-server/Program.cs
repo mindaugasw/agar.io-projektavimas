@@ -32,6 +32,8 @@ namespace agar_server
 						Debug.WriteLine("Url : " + useCustomUrl.ToString());
 						webBuilder.UseUrls(url);
 					}
+
+					webBuilder.UseUrls("http://localhost:3000");
 				});
 	}
 }
