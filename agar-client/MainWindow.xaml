@@ -6,33 +6,37 @@
         xmlns:local="clr-namespace:agar_client"
 		xmlns:main="clr-namespace:agar_client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="700">
+        Title="MainWindow" Height="760" Width="714">
 
-	<Grid Margin="0,0,0,0">
-		<Canvas x:Name="gameCanvas" ClipToBounds="True" Width="700" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+    <Grid Margin="0,0,0,-6">
+        <Canvas x:Name="gameCanvas" ClipToBounds="True" Width="700" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
 
-			<!--<Ellipse x:Name="playerEllipse"
+            <!--<Ellipse x:Name="playerEllipse"
                 Fill="Yellow"
                 Height="50"
                 Width="50"
                 StrokeThickness="2"
                 Stroke="Black" Canvas.Left="100" Canvas.Top="100"/>-->
 
-		</Canvas>
-		<Button x:Name="connectButton" Content="Start game" HorizontalAlignment="Left" Margin="10,505,0,0" VerticalAlignment="Top" Width="131" Click="connectButton_Click"/>
-		<TextBox x:Name="logTextBox" HorizontalAlignment="Stretch" Margin="10,530,10,10" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnlyCaretVisible="True" IsReadOnly="True" VerticalContentAlignment="Top"/>
+        </Canvas>
+        <Button x:Name="connectButton" Content="Start game" HorizontalAlignment="Left" Margin="10,505,0,0" VerticalAlignment="Top" Width="131" Click="connectButton_Click"/>
+        <TextBox x:Name="logTextBox" Margin="10,530,14,95" TextWrapping="Wrap" IsReadOnlyCaretVisible="True" IsReadOnly="True" VerticalContentAlignment="Top"/>
+        <TextBox x:Name="chatInput" HorizontalAlignment="Left" Margin="10,678,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="542" Height="30" TextChanged="TextBox_TextChanged"/>
+        <Button Content="Send" HorizontalAlignment="Left" Margin="570,678,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.546,0.102" Height="30" Click="Send_Click"/>
+        <Button Content="Undo" HorizontalAlignment="Left" Margin="606,678,0,0" VerticalAlignment="Top" Height="30" Click="Undo_Click"/>
+        <Button Content="Redo" HorizontalAlignment="Left" Margin="644,678,0,0" VerticalAlignment="Top" Height="30" Click="Redo_Click"/>
 
-	</Grid>
+    </Grid>
 
-	<Window.CommandBindings>
-		<CommandBinding Command="main:Command.Player_move" Executed="ProcessMovementInput" />
-	</Window.CommandBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="main:Command.Player_move" Executed="ProcessMovementInput" />
+    </Window.CommandBindings>
 
-	<Window.InputBindings>
-		<KeyBinding Key="Up" Command="main:Command.Player_move" CommandParameter="up" />
-		<KeyBinding Key="Down" Command="main:Command.Player_move" CommandParameter="down" />
-		<KeyBinding Key="Right" Command="main:Command.Player_move" CommandParameter="right" />
-		<KeyBinding Key="Left" Command="main:Command.Player_move" CommandParameter="left" />
-	</Window.InputBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Up" Command="main:Command.Player_move" CommandParameter="up" />
+        <KeyBinding Key="Down" Command="main:Command.Player_move" CommandParameter="down" />
+        <KeyBinding Key="Right" Command="main:Command.Player_move" CommandParameter="right" />
+        <KeyBinding Key="Left" Command="main:Command.Player_move" CommandParameter="left" />
+    </Window.InputBindings>
 
 </Window>

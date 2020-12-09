@@ -13,6 +13,12 @@ using agar_server.Flyweight;
 
 namespace agar_server.Hubs
 {
+
+    public class MediatorData
+    {
+        public static Mediator mediator = new ConcreteMediator();
+        public static Dictionary<string, Colleague> ChatUserIds = new Dictionary<string, Colleague>();
+    }
 	public class GameHub : Hub
 	{
         //Dictionary<string, Point> players = new Dictionary<string, Point>();
@@ -40,9 +46,15 @@ namespace agar_server.Hubs
 
             var newPlayer = new Player() { Id = id, Position = position };
             context.Players.Add(newPlayer);
+
+            var user = new ChatUser(MediatorData.mediator, id);
+            MediatorData.mediator.addUser(user);
+            MediatorData.ChatUserIds.Add(id, user);
+
             //context.SaveChanges();
 
             Clients.Others.SendAsync("AnnounceNewPlayer", id, position);
+
 
 			//var playersList = context.Players.Where(plr => plr.Id != id).ToArray();
 			var playersList = context.Players; // Filtering not needed, as current player is not yet saved to DB
@@ -109,6 +121,13 @@ namespace agar_server.Hubs
 
             context.Players.Where(plr => plr.Id == id).First().Position = position;
             context.SaveChanges();
+        }
+
+        public async Task GetChatMessage(string id, string message)
+        {
+            Debug.WriteLine($"Received: {message}");
+            var user = MediatorData.ChatUserIds[id];
+            user.sendMessage(message, this);
         }
     }
 }
