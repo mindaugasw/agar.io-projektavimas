@@ -106,5 +106,41 @@ namespace agar_client
 			//connectButton.Content = "";
 			//connectButton.IsEnabled = true;
 		}
-	}
+
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {
+			CommunicationManager.SendChatMessage(GameManager.LocalPlayer.Id, chatInput.Text);
+        }
+
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+			if(GameManager.mementoIdx < 2)
+            {
+				return;
+            }
+			GameManager.chatOriginator.SetMemento(GameManager.chatCareTaker.get(--GameManager.mementoIdx - 1));
+			chatInput.Text = GameManager.chatOriginator.GetState();
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e)
+        {
+			if (GameManager.mementoIdx > GameManager.mementoMaxIdx - 1)
+			{
+				return;
+			}
+			GameManager.chatOriginator.SetMemento(GameManager.chatCareTaker.get(GameManager.mementoIdx++));
+			chatInput.Text = GameManager.chatOriginator.GetState();
+		}
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+			if(chatInput.Text != GameManager.chatOriginator.GetState())
+            {
+				GameManager.chatOriginator.SetState(chatInput.Text);
+				GameManager.chatCareTaker.add(GameManager.mementoIdx++, GameManager.chatOriginator.CreateMemento());
+
+				GameManager.mementoMaxIdx = GameManager.mementoIdx;
+			}
+        }
+    }
 }

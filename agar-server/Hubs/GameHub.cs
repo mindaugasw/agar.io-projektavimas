@@ -9,10 +9,16 @@ using agar_server.Game.Objects;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using static agar_server.Game.Utils;
-
+using agar_server.Flyweight;
 
 namespace agar_server.Hubs
 {
+
+    public class MediatorData
+    {
+        public static Mediator mediator = new ConcreteMediator();
+        public static Dictionary<string, Colleague> ChatUserIds = new Dictionary<string, Colleague>();
+    }
 	public class GameHub : Hub
 	{
         //Dictionary<string, Point> players = new Dictionary<string, Point>();
@@ -40,9 +46,15 @@ namespace agar_server.Hubs
 
             var newPlayer = new Player() { Id = id, Position = position };
             context.Players.Add(newPlayer);
+
+            var user = new ChatUser(MediatorData.mediator, id);
+            MediatorData.mediator.addUser(user);
+            MediatorData.ChatUserIds.Add(id, user);
+
             //context.SaveChanges();
 
             Clients.Others.SendAsync("AnnounceNewPlayer", id, position);
+
 
 			//var playersList = context.Players.Where(plr => plr.Id != id).ToArray();
 			var playersList = context.Players; // Filtering not needed, as current player is not yet saved to DB
@@ -74,28 +86,28 @@ namespace agar_server.Hubs
         }
 
 
-        public async Task CreateMapObjects(string[] ids, string[] mapObjectNames, Point[] positions) 
+        public async Task CreateMapObjects(string[] ids, string[] mapObjectNames, Point[] positions)
         {
             for (int i = 0; i < ids.Length; i++)
             {
                 Debug.WriteLine($"Created map object. ID: {ids[i]}, Name: {mapObjectNames[i]}, X: {positions[i].X}, Y: {positions[i].Y}");
+                var newObject = ObjectFactory.getObject(mapObjectNames[i]);
+                newObject.Id = ids[i];
+                newObject.Position = positions[i];
                 switch (mapObjectNames[i])
                 {
                     case "GreenFood":
                     case "RedFood":
-                        var newFood = new Food() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
-                        context.Food.Add(newFood);
+                        context.Food.Add((Food)newObject);
                         break;
                     case "GreenVirus":
                     case "RedVirus":
-                        var newVirus = new Virus() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
-                        context.Viruses.Add(newVirus);
+                        context.Viruses.Add((Virus)newObject);
                         break;
                     case "BluePoison":
                     case "CyanPoison":
                     case "DarkBluePoison":
-                        var newPoison = new Poison() { Id = ids[i], Position = positions[i], Name = mapObjectNames[i] };
-                        context.Poison.Add(newPoison);
+                        context.Poison.Add((Poison)newObject);
                         break;
                 }
             }
@@ -109,6 +121,13 @@ namespace agar_server.Hubs
 
             context.Players.Where(plr => plr.Id == id).First().Position = position;
             context.SaveChanges();
+        }
+
+        public async Task GetChatMessage(string id, string message)
+        {
+            Debug.WriteLine($"Received: {message}");
+            var user = MediatorData.ChatUserIds[id];
+            user.sendMessage(message, this);
         }
     }
 }

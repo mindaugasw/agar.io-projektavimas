@@ -22,12 +22,19 @@ namespace agar_client
 
 		public static bool IsTestEnvironment = false;
 
-		LocalPlayer LocalPlayer;
+		public static LocalPlayer LocalPlayer;
 		Dictionary<string, Player> players = new Dictionary<string, Player>();
 
 		List<Food> food = new List<Food>();
 		List<Virus> viruses = new List<Virus>();
 		List<Poison> poison = new List<Poison>();
+
+		public static Caretaker chatCareTaker = new Caretaker();
+
+		public static Originator chatOriginator = new Originator();
+
+		public static int mementoIdx = 1;
+		public static int mementoMaxIdx = 1;
 
 		public GameManager(bool testEnv = false)
 		{
@@ -44,6 +51,7 @@ namespace agar_client
 			//new CommunicationManager(); // Changed to Singleton-instatiation
 			new InputHandler();
 			new GraphicsDrawer();
+
 
 			Logger.Log("All services initialized");
 

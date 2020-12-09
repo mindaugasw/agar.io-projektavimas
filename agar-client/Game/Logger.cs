@@ -17,9 +17,19 @@ namespace agar_client.Game
 
 		public static void Log(object obj)
 		{
-			textBox.AppendText($"\n{DateTime.Now.ToString("HH:mm:ss")}: {obj.ToString()}");
-			Debug.WriteLine(obj);
-			textBox.ScrollToEnd();
+			try
+			{
+				if(textBox != null)
+                {
+					textBox.AppendText($"\n{DateTime.Now.ToString("HH:mm:ss")}: {obj.ToString()}");
+					Debug.WriteLine(obj);
+					textBox.ScrollToEnd();
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("{0} Exception caught.", ex);
+			}
 		}
 		public static void Log()
 		{

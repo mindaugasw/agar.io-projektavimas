@@ -25,7 +25,7 @@ namespace agar_client
         HubConnection connection;
         bool connected = false;
 
-        ConnectionMessage connectionMessage;
+        static ConnectionMessage connectionMessage;
 
         // PROPERTIES
         public static CommunicationManager Instance // Design pattern #1.2 Singleton
@@ -50,7 +50,8 @@ namespace agar_client
 				Instance = this;
 			else
 				throw new Exception();*/
-            SERVER_URL = ConfigManager.Get<string>("serverUrl");
+            // SERVER_URL = ConfigManager.Get<string>("serverUrl");
+            SERVER_URL = "http://localhost:3000";
 
 			connection = new HubConnectionBuilder()
 				.WithUrl(SERVER_URL+"/gamehub")
@@ -131,6 +132,14 @@ namespace agar_client
                 });
             });
 
+            connection.On("ReceiveChatMessage", (string id, string message) =>
+            {
+                MainWindow.Instance.Dispatcher.Invoke(() =>
+                {
+                    Logger.Log($"{id}: {message}");
+                });
+            });
+
             // --- CONNECTING ---
 
             try
@@ -170,6 +179,11 @@ namespace agar_client
         public async void CreateMapObjects(string[] ids, string[] mapObjectNames, Point[] positions) 
         {
             connectionMessage.SendMessage("CreateMapObjects", ids, mapObjectNames, positions);
+        }
+
+        public static async void SendChatMessage(string id, string message)
+        {
+            connectionMessage.SendMessage("GetChatMessage", id, message);
         }
     }
 }
