@@ -46,12 +46,11 @@ namespace agar_client
 
         public CommunicationManager()
 		{
-            /*if (Instance == null)
+			/*if (Instance == null)
 				Instance = this;
 			else
 				throw new Exception();*/
-            // SERVER_URL = ConfigManager.Get<string>("serverUrl");
-            SERVER_URL = "http://localhost:3000";
+			SERVER_URL = ConfigManager.Get<string>("serverUrl");
 
 			connection = new HubConnectionBuilder()
 				.WithUrl(SERVER_URL+"/gamehub")
