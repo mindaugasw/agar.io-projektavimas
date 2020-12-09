@@ -77,5 +77,10 @@ namespace agar_client.Game.Objects
 		{
 			return new ListIterator(objects);
 		}
-	}
+
+        public override string ToString()
+        {
+            return Name + ": " + Position;
+        }
+    }
 }

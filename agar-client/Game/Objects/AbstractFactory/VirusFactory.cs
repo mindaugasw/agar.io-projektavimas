@@ -55,5 +55,15 @@ namespace agar_client.Game.Objects
                     }
             }
         }
+
+        public override void Message2()
+        {
+            Logger.Log("Message2 from VirusFactory");
+        }
+
+        public override void Message3()
+        {
+            Logger.Log("Message3 from VirusFactory");
+        }
     }
 }

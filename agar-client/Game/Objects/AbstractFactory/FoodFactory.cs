@@ -69,5 +69,20 @@ namespace agar_client.Game.Objects
             }
 
         }
+
+        public override void Message2()
+        {
+            Logger.Log("Message2 from FoodFactory");
+        }
+
+        public override void Message3()
+        {
+            Logger.Log("Message3 from FoodFactory");
+        }
+
+        public sealed override void Message1()
+        {
+            Logger.Log("Message from FoodFactory");
+        }
     }
 }

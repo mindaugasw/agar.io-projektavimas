@@ -80,6 +80,7 @@ namespace agar_client
 		{
 			AbstractFactory foodFactory = new FoodFactory();
 			foodFactory.createMapObjects(null);
+			//foodFactory.TemplateMethod(null);
 			food = FoodFactory.Instance.food;
 
 			// TO SHOW HOW CLONE WORKS
@@ -103,7 +104,8 @@ namespace agar_client
 		public void CreateVirusObjects() 
 		{
             AbstractFactory virusFactory = new VirusFactory();
-            virusFactory.createMapObjects(null);
+			virusFactory.createMapObjects(null);
+			//virusFactory.TemplateMethod(null);
             viruses = VirusFactory.Instance.viruses;
 
 
@@ -150,12 +152,14 @@ namespace agar_client
 			MapObject composite2 = FoodFactory.Instance.objects;
 			MapObject composite3 = PoisonFactory.Instance.poison2;
 
+
 			composite1.AddRange(composite2.GetMapObjects());
 			composite3.AddRange(composite1.GetMapObjects());
 
 			string[] ids = new string[composite3.Count()];
 			string[] mapObjectNames = new string[composite3.Count()];
 			Point[] positions = new Point[composite3.Count()];
+			// List Iteration
 			for (IIterator iter = composite3.GetIterator(); iter.HasNext();)
             {
 				MapObject x = (MapObject) iter.Next();
@@ -166,6 +170,23 @@ namespace agar_client
 
 			}
 			CommunicationManager.Instance.CreateMapObjects(ids,mapObjectNames,positions);
+
+			//Dictionary<int, MapObject> dicMapObj = new Dictionary<int, MapObject>();
+
+			//Logger.Log("Array Iteration");
+			//for (IIterator iter = new ArrayIterator(composite2.GetMapObjects().ToArray()); iter.HasNext();)
+			//{
+			//	MapObject x = (MapObject)iter.Next();
+			//	dicMapObj.Add(iter.Index(), x);
+			//	Logger.Log(x);
+			//}
+
+			//Logger.Log("Dictionary Iteration");
+			//for (IIterator iter = new DictionaryIterator(dicMapObj); iter.HasNext();)
+			//{
+			//	MapObject x = (MapObject)iter.Next();
+			//	Logger.Log(x);
+			//}
 		}
 
 		public void ReceiveMapObjects(string[] ids, string[] mapObjectNames, Point[] positions)
