@@ -7,16 +7,16 @@ using System.Windows.Threading;
 
 namespace agar_client.Game.Objects.State
 {
-	class PowerupStateD : IPowerupState
+	class PowerupStateBoost : IPowerupState
 	{
 		StatefulPowerupContext context;
 
-		public PowerupStateD(StatefulPowerupContext context)
+		public PowerupStateBoost(StatefulPowerupContext context)
 		{
 			this.context = context;
 			ModifyShape(context.Shape);
 
-			var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+			var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
 			timer.Tick += (sender, args) =>
 			{
 				timer.Stop();
@@ -25,16 +25,17 @@ namespace agar_client.Game.Objects.State
 			timer.Start();
 		}
 
+
 		public void ModifyShape(Shape shape)
 		{
 			var s = context.Shape;
-			var color = Color.FromRgb(255, 255, 183);
-			int size = 25;
+			var color = Color.FromRgb(195, 255, 195);
+			int size = 30;
 			s.Width = size;
 			s.Height = size;
 			s.Fill = new SolidColorBrush(color);
 
-			context.text.Text = "D";
+			context.text.Text = "B";
 		}
 
 		public void UseEffect()
@@ -44,11 +45,7 @@ namespace agar_client.Game.Objects.State
 
 		public void SetNextState(StatefulPowerupContext context)
 		{
-			var x = GameManager.Random.NextDouble();
-			if (x < 0.33)
-				context.SetState(new PowerupStateD(context));
-			else
-				context.SetState(new PowerupStateA(context));
+			context.SetState(new PowerupStatePoisoned(context));
 		}
 	}
 }

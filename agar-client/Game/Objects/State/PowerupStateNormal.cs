@@ -7,11 +7,11 @@ using System.Windows.Threading;
 
 namespace agar_client.Game.Objects.State
 {
-	class PowerupStateB : IPowerupState
+	class PowerupStateNormal : IPowerupState
 	{
 		StatefulPowerupContext context;
 
-		public PowerupStateB(StatefulPowerupContext context)
+		public PowerupStateNormal(StatefulPowerupContext context)
 		{
 			this.context = context;
 			ModifyShape(context.Shape);
@@ -28,23 +28,27 @@ namespace agar_client.Game.Objects.State
 		public void ModifyShape(Shape shape)
 		{
 			var s = context.Shape;
-			var color = Color.FromRgb(255, 195, 195);
+			var color = Color.FromRgb(255, 255, 183);
 			int size = 25;
 			s.Width = size;
 			s.Height = size;
 			s.Fill = new SolidColorBrush(color);
 
-			context.text.Text = "B";
+			context.text.Text = "N";
 		}
 
 		public void UseEffect()
 		{
-			LocalPlayer.Instance.changeStrategy(new SleepStrategy());
+			LocalPlayer.Instance.changeStrategy(new NormalStrategy());
 		}
 
 		public void SetNextState(StatefulPowerupContext context)
 		{
-			context.SetState(new PowerupStateC(context));
+			var x = GameManager.Random.NextDouble();
+			if (x < 0.33)
+				context.SetState(new PowerupStateNormal(context));
+			else
+				context.SetState(new PowerupStateBoost(context));
 		}
 	}
 }

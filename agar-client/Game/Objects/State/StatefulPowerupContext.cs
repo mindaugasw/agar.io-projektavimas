@@ -13,7 +13,7 @@ namespace agar_client.Game.Objects.State
 
 		public StatefulPowerupContext() : base()
 		{
-			SetState(new PowerupStateA(this));
+			SetState(new PowerupStateBoost(this));
 		}
 
 		public void SetState(IPowerupState newState)
