@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows.Controls;
 
@@ -9,6 +10,8 @@ namespace agar_client.Game
 	class Logger
 	{
 		static TextBox textBox;
+
+		static Dictionary<string, StreamWriter> fileStreams;
 
 		public Logger(TextBox logTextbox)
 		{
@@ -21,7 +24,7 @@ namespace agar_client.Game
 			{
 				if(textBox != null)
                 {
-					textBox.AppendText($"\n{DateTime.Now.ToString("HH:mm:ss")}: {obj.ToString()}");
+					textBox.AppendText(LogFormat(obj));
 					Debug.WriteLine(obj);
 					textBox.ScrollToEnd();
 				}
@@ -36,6 +39,22 @@ namespace agar_client.Game
 			textBox.AppendText("\n");
 		}
 
+		public static void LogToFile(string file, object obj)
+		{
+			if (fileStreams == null)
+				fileStreams = new Dictionary<string, StreamWriter>();
+
+			if (!fileStreams.ContainsKey(file))
+				fileStreams.Add(file, new StreamWriter(file, true));
+
+			fileStreams[file].WriteLine(LogFormat(obj, false));
+			fileStreams[file].Flush();
+		}
+
+		static string LogFormat(object obj, bool appendNewLine = true)
+		{
+			return $"{(appendNewLine ? "\n" : "")}{DateTime.Now.ToString("HH:mm:ss")}: {obj.ToString()}";
+		}
 
 	}
 }

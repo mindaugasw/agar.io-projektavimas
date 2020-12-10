@@ -27,7 +27,7 @@ namespace agar_client.Game.Objects
         public Food Clone()
         {
             var copy = (Food) this.MemberwiseClone();
-            copy.Shape = GraphicsDrawer.CreateNewEllipse(copy.size, copy.color, copy.Position);
+            copy.Shape = GraphicsDrawer.Instance.CreateNewEllipse(copy.size, copy.color, copy.Position);
             return (Food) copy;
         }
 

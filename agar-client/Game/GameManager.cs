@@ -6,6 +6,7 @@ using agar_client.Game.Objects.Builder;
 using agar_client.Game.Objects.Factory;
 using agar_client.Game.Objects.Iterator;
 using agar_client.Game.Objects.State;
+using agar_client.Game.Proxy;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -51,8 +52,12 @@ namespace agar_client
 
 			//new CommunicationManager(); // Changed to Singleton-instatiation
 			new InputHandler();
-			new GraphicsDrawer();
 
+			// Design pattern #18 Proxy
+			if (ConfigManager.Get<bool>("useGraphicsDrawerLoggerProxy"))
+				new GraphicsDrawerLoggerProxy();
+			else
+				new GraphicsDrawer();
 
 			Logger.Log("All services initialized");
 
@@ -64,27 +69,7 @@ namespace agar_client
 			director.Construct();
 			LocalPlayer = (LocalPlayer)concreteBuilder.GetResult();
 
-			/*if (Instance == null) // Attempted fix to run all tests at once. Still not working.
-			{
-				Instance = this;
-				Random = new Random();
-
-				//new CommunicationManager(); // Changed to Singleton-instatiation
-				new InputHandler();
-				new GraphicsDrawer();
-
-				Logger.Log("All services initialized");
-
-				//LocalPlayer = new LocalPlayer();
-
-				// Design pattern #6.1 Builder
-				var concreteBuilder = new LocalPlayerBuilder();
-				var director = new Director(concreteBuilder);
-				director.Construct();
-				LocalPlayer = (LocalPlayer)concreteBuilder.GetResult();
-			}*/
-
-			new StatefulPowerupContext(); // Design pattern #18 State
+			new StatefulPowerupContext(); // Design pattern #17 State
 		}
 
 		public void CreateFoodObjects() 
@@ -247,7 +232,7 @@ namespace agar_client
 
 		public void MovePlayer(string id, Point position)
 		{
-			GraphicsDrawer.MoveShape(players[id].Shape, position);
+			GraphicsDrawer.Instance.MoveShape(players[id].Shape, position);
 		}
 	}
 }

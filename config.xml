@@ -2,4 +2,5 @@
 	<add key="useCustomServerUrl" value="false" />
 	<add key="serverUrl" value="https://localhost:44372" />
 	<add key="testsLoggingEnabled" value="false" />
+	<add key="useGraphicsDrawerLoggerProxy" value="false" />
 </config>

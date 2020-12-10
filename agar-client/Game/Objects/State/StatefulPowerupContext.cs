@@ -30,11 +30,11 @@ namespace agar_client.Game.Objects.State
 
 			Position = position.Value;
 			var color = System.Windows.Media.Color.FromRgb((byte)r.Next(0, 256), (byte)r.Next(0, 256), (byte)r.Next(0, 256));
-			Shape = GraphicsDrawer.CreateNewRectangle(250, color, Position);
+			Shape = GraphicsDrawer.Instance.CreateNewRectangle(250, color, Position);
 
 			text = new TextBlock();
 			text.Text = "?";
-			GraphicsDrawer.AddControl(text, position.Value + new Utils.Point(5, 1));
+			GraphicsDrawer.Instance.AddControl(text, position.Value + new Utils.Point(5, 1));
 		}
 	}
 }

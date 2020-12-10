@@ -7,18 +7,20 @@ using System.Windows.Controls;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media;
-using System.Windows;
 using agar_client.Game;
 using System.Windows.Markup;
+using agar_client.Game.Proxy;
 
 namespace agar_client
 {
-	public class GraphicsDrawer
+	public class GraphicsDrawer : IGraphicsDrawer
 	{
-		public static GraphicsDrawer Instance;
+		//public static GraphicsDrawer Instance;
+		public static IGraphicsDrawer Instance;
+
 		static object lockObj = new object();
 
-		Canvas GameCanvas;
+		public Canvas GameCanvas { get; set; }
 
 		public GraphicsDrawer()
 		{
@@ -34,25 +36,21 @@ namespace agar_client
 		}
 
 
-
-		public static Ellipse CreateNewEllipse(int size, System.Windows.Media.Color color, Utils.Point position)
+		public Ellipse CreateNewEllipse(int size, System.Windows.Media.Color color, Utils.Point position)
 		{
-			//return MainWindow.Instance.Dispatcher.Invoke(() => { // Unit tests attempted fix (did not work)
-				Ellipse e = new Ellipse();
-				Instance.GameCanvas.Children.Add(e);
-				e.Width = size;
-				e.Height = size;
-				e.Fill = new SolidColorBrush(color);
-				e.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
-				e.StrokeThickness = 2;
-				MoveShape(e, position);
-				return e;
-			//});
+			Ellipse e = new Ellipse();
+			Instance.GameCanvas.Children.Add(e);
+			e.Width = size;
+			e.Height = size;
+			e.Fill = new SolidColorBrush(color);
+			e.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
+			e.StrokeThickness = 2;
+			MoveShape(e, position);
+			return e;
 		}
 
-		public static System.Windows.Shapes.Rectangle CreateNewRectangle(int size, System.Windows.Media.Color color, Utils.Point position)
+		public System.Windows.Shapes.Rectangle CreateNewRectangle(int size, System.Windows.Media.Color color, Utils.Point position)
 		{
-			//return MainWindow.Instance.Dispatcher.Invoke(() => { // Unit tests attempted fix (did not work)
 			System.Windows.Shapes.Rectangle r = new System.Windows.Shapes.Rectangle();
 			Instance.GameCanvas.Children.Add(r);
 			r.Width = size;
@@ -62,17 +60,16 @@ namespace agar_client
 			r.StrokeThickness = 2;
 			MoveShape(r, position);
 			return r;
-			//});
 		}
 
-		public static void AddControl(UIElement control, Utils.Point position)
+		public void AddControl(UIElement control, Utils.Point position)
 		{
 			Instance.GameCanvas.Children.Add(control);
 			Canvas.SetLeft(control, position.X);
 			Canvas.SetTop(control, position.Y);
 		}
 
-		public static Polygon CreateNewVirus(int size, System.Windows.Media.Color color, Utils.Point position)
+		public Polygon CreateNewVirus(int size, System.Windows.Media.Color color, Utils.Point position)
 		{
 			PointCollection p = new PointCollection();
 			p.Add(new System.Windows.Point(0, 25));
@@ -97,7 +94,7 @@ namespace agar_client
 		/// <summary>
 		/// Move shape to specific absolute position
 		/// </summary>
-		public static void MoveShape(Shape shape, Utils.Point position)
+		public void MoveShape(Shape shape, Utils.Point position)
 		{
 			Canvas.SetLeft(shape, position.X);
 			Canvas.SetTop(shape, position.Y);
@@ -117,7 +114,7 @@ namespace agar_client
 			return shape.PointToScreen(relativeTo); // TODO. Not working, returns wrong position
 		}*/
 
-		public static void RemoveShape(Shape shape) {
+		public void RemoveShape(Shape shape) {
 			Instance.GameCanvas.Children.Remove(shape);
 		}
 	}
