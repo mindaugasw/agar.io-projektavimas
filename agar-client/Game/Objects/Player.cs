@@ -45,7 +45,7 @@ namespace agar_client.Game.Objects
 			
 			Position = position.Value;
 			var color = System.Windows.Media.Color.FromRgb((byte)r.Next(0, 256), (byte)r.Next(0, 256), (byte)r.Next(0, 256));
-			Shape = GraphicsDrawer.CreateNewEllipse(50, color, Position);
+			Shape = GraphicsDrawer.Instance.CreateNewEllipse(50, color, Position);
 		}
 
 		public int playerMoveSpeed()

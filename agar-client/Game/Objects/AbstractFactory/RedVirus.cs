@@ -25,7 +25,7 @@ namespace agar_client.Game.Objects
             if (!position.HasValue)
                 position = new System.Windows.Point(r.Next(0, 700), r.Next(0, 500));
             Position = position.Value;
-            Shape = GraphicsDrawer.CreateNewVirus(size, color, Position);
+            Shape = GraphicsDrawer.Instance.CreateNewVirus(size, color, Position);
         }
     }
 }

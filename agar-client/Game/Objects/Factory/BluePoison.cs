@@ -26,7 +26,7 @@ namespace agar_client.Game.Objects.Factory
             if (!position.HasValue)
                 position = new System.Windows.Point(r.Next(0, 700), r.Next(0, 500));
             Position = position.Value;
-            Shape = GraphicsDrawer.CreateNewEllipse(size, color, Position);
+            Shape = GraphicsDrawer.Instance.CreateNewEllipse(size, color, Position);
         }
 
         public override void PoisonLogMessage()
