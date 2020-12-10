@@ -5,6 +5,7 @@ using agar_client.Game.Objects.Bridge;
 using agar_client.Game.Objects.Builder;
 using agar_client.Game.Objects.Factory;
 using agar_client.Game.Objects.Iterator;
+using agar_client.Game.Objects.State;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -82,6 +83,8 @@ namespace agar_client
 				director.Construct();
 				LocalPlayer = (LocalPlayer)concreteBuilder.GetResult();
 			}*/
+
+			new StatefulPowerupContext(); // Design pattern #18 State
 		}
 
 		public void CreateFoodObjects() 

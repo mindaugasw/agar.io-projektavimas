@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Windows;
 using agar_client.Game;
+using System.Windows.Markup;
 
 namespace agar_client
 {
@@ -47,6 +48,28 @@ namespace agar_client
 				MoveShape(e, position);
 				return e;
 			//});
+		}
+
+		public static System.Windows.Shapes.Rectangle CreateNewRectangle(int size, System.Windows.Media.Color color, Utils.Point position)
+		{
+			//return MainWindow.Instance.Dispatcher.Invoke(() => { // Unit tests attempted fix (did not work)
+			System.Windows.Shapes.Rectangle r = new System.Windows.Shapes.Rectangle();
+			Instance.GameCanvas.Children.Add(r);
+			r.Width = size;
+			r.Height = size;
+			r.Fill = new SolidColorBrush(color);
+			r.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
+			r.StrokeThickness = 2;
+			MoveShape(r, position);
+			return r;
+			//});
+		}
+
+		public static void AddControl(UIElement control, Utils.Point position)
+		{
+			Instance.GameCanvas.Children.Add(control);
+			Canvas.SetLeft(control, position.X);
+			Canvas.SetTop(control, position.Y);
 		}
 
 		public static Polygon CreateNewVirus(int size, System.Windows.Media.Color color, Utils.Point position)
