@@ -7,6 +7,7 @@ using agar_client.Game.Objects.Factory;
 using agar_client.Game.Objects.Iterator;
 using agar_client.Game.Objects.State;
 using agar_client.Game.Proxy;
+using agar_client.Game.Visitor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -70,6 +71,29 @@ namespace agar_client
 			LocalPlayer = (LocalPlayer)concreteBuilder.GetResult();
 
 			new StatefulPowerupContext(); // Design pattern #17 State
+
+
+			// TO SHOW HOW VISITOR WORKS
+			TaxVisitor taxCal = new TaxVisitor();
+			HolidayVisitor holidayVisitor = new HolidayVisitor();
+
+			UltimateAcc ultimateAcc = new UltimateAcc(3.99);
+			Skin skin = new Skin(0.50);
+			XPBoost xpBoostHigh = new XPBoost(1.5);
+
+			Logger.Log("\n");
+			Logger.Log("Price plus tax");
+			Logger.Log(ultimateAcc.Accept(taxCal));
+			Logger.Log(skin.Accept(taxCal));
+			Logger.Log(xpBoostHigh.Accept(taxCal));
+			Logger.Log("\n");
+
+			Logger.Log("Price on HOLIDAYS");
+			Logger.Log(ultimateAcc.Accept(holidayVisitor));
+			Logger.Log(skin.Accept(holidayVisitor));
+			Logger.Log(xpBoostHigh.Accept(holidayVisitor));
+			Logger.Log("\n");
+
 		}
 
 		public void CreateFoodObjects() 
@@ -113,7 +137,6 @@ namespace agar_client
             //Damage greenVirus = new QuickDamageAction(new GreenVirus());
             //Logger.Log("Green Virus:");
             //greenVirus.InflictDamage();
-
 
             //Damage redVirus2 = new SlowDamageAction(new RedVirus());
             //Logger.Log("Red Virus:");

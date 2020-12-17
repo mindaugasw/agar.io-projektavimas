@@ -1,4 +1,5 @@
 ﻿using agar_client.Game;
+using agar_client.Game.Chain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -109,8 +110,24 @@ namespace agar_client
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-			CommunicationManager.SendChatMessage(GameManager.LocalPlayer.Id, chatInput.Text);
-        }
+			IChain chainWords1 = new N_WordsChecking();
+			IChain chainWords2 = new F_WordsChecking();
+			IChain chainWords3 = new Offensive_WordsChecking();
+			IChain chainWords4 = new Religion_SwearWordsChecking();
+
+			chainWords1.SetNextChain(chainWords2);
+			chainWords2.SetNextChain(chainWords3);
+			chainWords3.SetNextChain(chainWords4);
+
+			Words request = new Words(chatInput.Text);
+			chainWords1.CheckBadWord(request);
+
+            if (!request.GetIsSwear())
+            {
+				CommunicationManager.SendChatMessage(GameManager.LocalPlayer.Id, chatInput.Text);
+			}
+
+		}
 
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
